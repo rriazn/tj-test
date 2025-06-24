@@ -1,0 +1,36 @@
+header {
+    display: flex;
+    padding-inline: 16px;
+    padding-block: 8px;
+    background-color: blue;
+    color: white;
+    align-items: center;
+    justify-content: space-between;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    
+    
+    nav {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        text-align: right; // neu
+        width: 100%;
+        span {
+            cursor: pointer;
+        }
+
+        ul {
+            display: flex;
+            gap: 24px;
+            list-style: none;
+            font-size: small;
+            li {
+                cursor: pointer;
+            }
+        }
+    }
+}
+
+
