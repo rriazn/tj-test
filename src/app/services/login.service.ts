@@ -11,8 +11,5 @@ export class LoginService {
   private url = "http://localhost:3000/login";
   currentUserSignal = signal<UserInterface | undefined | null>(undefined);
 
-  login(password: string) {
-    const body = {"password": password};
-    return this.http.post<UserInterface>(this.url, body);
-  }
+  
 }

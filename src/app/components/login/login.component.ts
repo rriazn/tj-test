@@ -25,7 +25,7 @@ export class LoginComponent {
   gaveWrongPassword = signal<boolean>(false);
 
   onSubmit() {
-    this.loginService.login(this.form.getRawValue().password).pipe(
+    this.http.post<{user: UserInterface}>("http://localhost:3000/login", {user: this.form.getRawValue()}).pipe(
       catchError((error) => {
         if (error.status === 401) {
           console.error('Unauthorized');
@@ -37,9 +37,10 @@ export class LoginComponent {
         throw(error);
       })
     ).subscribe((response) => {
-      localStorage.setItem('token', response.token);
-      this.loginService.currentUserSignal.set(response);
+      localStorage.setItem('token', response.user.token);
+      this.loginService.currentUserSignal.set(response.user);
       this.gaveWrongPassword.set(false);
+      console.log(this.loginService.currentUserSignal());
     });
   }
 }
