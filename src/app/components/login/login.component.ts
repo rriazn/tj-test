@@ -28,11 +28,8 @@ export class LoginComponent {
     this.http.post<{user: UserInterface}>("http://localhost:3000/login", {user: this.form.getRawValue()}).pipe(
       catchError((error) => {
         if (error.status === 401) {
-          console.error('Unauthorized');
           this.gaveWrongPassword.set(true);
           this.form.reset();
-        } else {
-          console.error('Error:', error);
         }
         throw(error);
       })
@@ -41,7 +38,7 @@ export class LoginComponent {
       localStorage.setItem('token', response.user.token);
       this.loginService.currentUserSignal.set(response.user);
       this.gaveWrongPassword.set(false);
-      this.router.navigateByUrl("/")
+      this.router.navigateByUrl("/");
     });
   }
 }
