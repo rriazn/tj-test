@@ -37,10 +37,11 @@ export class LoginComponent {
         throw(error);
       })
     ).subscribe((response) => {
+      console.log(response.user.token);
       localStorage.setItem('token', response.user.token);
       this.loginService.currentUserSignal.set(response.user);
       this.gaveWrongPassword.set(false);
-      console.log(this.loginService.currentUserSignal());
+      this.router.navigateByUrl("/")
     });
   }
 }

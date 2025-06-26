@@ -3,10 +3,10 @@
         <span routerLink="/">Trampoline Judge Support</span>
         <ul>
             @if(loginService.currentUserSignal() == null) {
-                <li routerLink="/login">login</li>
+                <li class="clickable" routerLink="/login">login</li>
             } @else if(loginService.currentUserSignal()) {
                 <li>{{loginService.currentUserSignal()?.username}}</li>
-                <li (click)="logout()">logout</li>
+                <li class="clickable"  (click)="logout()">logout</li>
             }
         </ul>
     </nav>
