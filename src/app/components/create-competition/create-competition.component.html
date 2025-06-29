@@ -1,1 +1,11 @@
-<p>create-competition works!</p>
+<div>
+    <h1>Competitions</h1>
+    <div>
+        <ul>
+            @for (comp of competitions; track $index) {
+                <app-competition [competition]="comp"/>
+            }
+        </ul>
+        <button>New Competition</button>
+    </div>
+</div>

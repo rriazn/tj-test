@@ -9,7 +9,6 @@ import { firstValueFrom } from 'rxjs';
 export class LoginService {
   http = inject(HttpClient);
 
-  private url = "http://localhost:3000/admin";
   currentUserSignal = signal<UserInterface | undefined | null>(undefined);
 
   async verifyAdmin(): Promise<boolean> {
