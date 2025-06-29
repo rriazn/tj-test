@@ -10,7 +10,6 @@ import { RouterLink, RouterModule } from '@angular/router';
 })
 export class HeaderComponent {
   loginService = inject(LoginService);
-
   logout() {
     localStorage.setItem('token', '');
     this.loginService.currentUserSignal.set(null);

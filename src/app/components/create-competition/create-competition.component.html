@@ -1,11 +1,11 @@
-<div>
-    <h1>Competitions</h1>
-    <div>
+<div class="outer">
+    <h1 class="headline">Competitions</h1>
+    <div  class="inner">
         <ul>
             @for (comp of competitions; track $index) {
                 <app-competition [competition]="comp"/>
             }
         </ul>
-        <button>New Competition</button>
     </div>
+    <button>New Competition</button>
 </div>

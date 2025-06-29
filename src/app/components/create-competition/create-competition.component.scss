@@ -1,0 +1,40 @@
+.outer {
+    display: flex;
+    padding: 2rem;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    flex-direction: column;
+}
+
+.headline {
+    display: flex;
+    justify-content: center;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    color: rgb(122, 122, 122);
+}
+
+.inner {
+    border: solid #007bff;
+    border-radius: 10px;
+}
+
+.outer button {
+  width: 100%;
+  padding: 0.75rem;
+  margin-top: 1rem;
+  font-size: 1rem;
+  box-sizing: border-box;
+}
+
+.outer button {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.outer button:hover {
+  background-color: #0056b3;
+}
