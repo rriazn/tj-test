@@ -1,10 +1,40 @@
+.comp-outer {
+  display: flex;
+  flex-direction: row;
+  position: relative;
+  background-color: rgb(221, 221, 221);
+  border-radius: 10px;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+.comp-main {
+  padding: 10px;
+}
+
+.comp-title {
+  font-weight: 600;
+  padding-bottom: 5px;
+}
+
+
 .edit-picture {
-  width: 20%;
-  aspect-ratio: 1/1;
-  position: absolute;
-  right: 0;
+  width: 5%;
+  aspect-ratio: 1 / 1;
 }
 
 .edit-picture:hover {
   cursor: pointer;
 }
+
+.comp-groups, 
+.comp-part {
+  font-size: small;
+}
+
+.comp-groups:hover, 
+.comp-part:hover {
+  color: blue;
+  cursor: pointer;
+  text-decoration: underline;
+}
+
