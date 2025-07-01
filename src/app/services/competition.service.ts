@@ -19,6 +19,12 @@ export class CompetitionService {
       date: this.date,
       groups: this.groups,
       unassignedParticipants: this.part
+    },
+    {
+      name: "www",
+      date: this.date,
+      groups: [],
+      unassignedParticipants: []
     }];
   }
 }

@@ -1,8 +1,14 @@
 <div class="comp-outer">
     <div class="comp-main">
         <div class="comp-title">
-            {{competition().name}} ({{competition().date.toLocaleString()}})
-            <img class="edit-picture" src="./assets/edit.png">
+            @if(editMode()) {
+                <input type="text" placeholder="competition name" [(ngModel)]="competition().name">
+                <input type="date" placeholder="date" [(ngModel)]="dateString">
+            } @else {
+                {{competition().name}} 
+                ({{competition().date.toLocaleString()}})
+            }
+            <img class="edit-picture" src="./assets/edit.png" (click)="toggleEdit()">
         </div>
         <div class="comp-groups">
             Groups: {{competition().groups.length}}
