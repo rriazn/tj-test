@@ -1,5 +1,5 @@
 import { Component, input, OnInit, signal } from '@angular/core';
-import { Competition } from '../../model/competition.type';
+import { Competition } from '../../../model/competition.type';
 import { FormsModule } from '@angular/forms';
 import { DateTime } from 'luxon';
 

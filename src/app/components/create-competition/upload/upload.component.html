@@ -1,0 +1,13 @@
+<label for="participants">Upload participants:</label>
+<div class="drop-zone" (dragover)="onDragOver($event)" (drop)="onDrop($event)" (click)="triggerFileInput()">
+    <p>Drag and drop participants here, or click to select</p>
+    <input type="file" id="participants" multiple hidden #fileInput (change)="onFilesSelected($event)">
+</div>
+@if(files.length > 0) {
+    <h3>Preview:</h3>
+    <ul>
+        @for(file of files; track $index) {
+            <li>{{file.name}}</li>
+        }
+    </ul>
+}

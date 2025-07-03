@@ -1,0 +1,28 @@
+.drop-zone {
+  border: 2px dashed rgb(122, 122, 122);
+  padding: 20px;
+  text-align: center;
+  cursor: pointer;
+  border-radius: 8px;
+  margin-top: 10px;
+}
+
+.drop-zone.dragover {
+  border-color: #3f51b5;
+  background-color: #f0f8ff;
+}
+
+.drop-zone {
+  border: 2px dashed rgb(122, 122, 122);
+  padding: 20px;
+  text-align: center;
+  cursor: pointer;
+  border-radius: 8px;
+  margin-top: 10px;
+}
+
+.drop-zone.dragover {
+  border-color: #3f51b5;
+  background-color: #f0f8ff;
+}
+

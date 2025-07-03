@@ -1,13 +1,15 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, ElementRef, inject, signal, ViewChild } from '@angular/core';
 import { CompetitionService } from '../../services/competition.service';
-import { CompetitionComponent } from '../competition/competition.component';
+import { CompetitionComponent } from './competition/competition.component';
 import { Competition } from '../../model/competition.type';
 import { DateTime } from 'luxon';
 import { FormsModule } from '@angular/forms';
+import { NgIf } from '@angular/common';
+import { UploadComponent } from './upload/upload.component';
 
 @Component({
   selector: 'app-create-competition',
-  imports: [CompetitionComponent, FormsModule],
+  imports: [CompetitionComponent, FormsModule, UploadComponent],
   templateUrl: './create-competition.component.html',
   styleUrl: './create-competition.component.scss'
 })
@@ -42,4 +44,5 @@ export class CreateCompetitionComponent {
     };
     this.createNew.set(false);
   }
+
 }

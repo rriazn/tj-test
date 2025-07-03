@@ -13,8 +13,7 @@
     <div class="create-outer">
         <input type="text" placeholder="competition title" [(ngModel)]="newComp.name">
         <input type="date" placeholder="date" [(ngModel)]="newDate">  
-        <label for="participants">Upload participants:</label>
-        <input type="file" id="participants" multiple>
+        <app-upload></app-upload>
         Configure Groups
         <button (click)="saveComp()">Save</button>
     </div>
