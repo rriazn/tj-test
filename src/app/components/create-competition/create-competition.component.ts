@@ -18,7 +18,7 @@ export class CreateCompetitionComponent {
 
   competitions = this.competitionService.getCompetitions();
 
-  createNew = signal<Boolean>(false);
+  createOrEdit = signal<Boolean>(false);
 
   newComp: Competition = {
       name: "",
@@ -29,12 +29,44 @@ export class CreateCompetitionComponent {
   newDate = DateTime.local().toISODate();
 
   createNewComp() {
-    if(!this.createNew()) {
-      this.createNew.set(true);
+    if(!this.createOrEdit()) {
+      this.createOrEdit.set(true);
+    } else {
+      const confirm = window.confirm(`You have unsaved progress which will be lost if you continue.`);
+      if(confirm) {
+        this.newComp = {
+          name: "",
+          date: DateTime.local(),
+          groups: [],
+          unassignedParticipants: []
+        };
+      }
+    }
+  }
+
+  editComp(comp: Competition) {
+    if(this.createOrEdit()) {
+      const confirm = window.confirm(`You have unsaved progress which will be lost if you continue.`);
+      if(!confirm) {
+        return;
+      }
+    }
+    this.createOrEdit.set(true);
+    this.newComp = comp;
+  
+  }
+
+  deleteComp(comp: Competition) {
+    const confirm = window.confirm(`Are you sure you want to delete "${comp.name}"?\nThis action cannot be reversed.`);
+    if(confirm) {
+      this.competitions = this.competitions.filter((entry) => entry != comp);
+
+      // TODO: delete from backend
     }
   }
 
   saveComp() {
+    this.competitions = this.competitions.filter((entry) => entry.name != this.newComp.name);
     this.competitions = [...this.competitions, this.newComp];
     this.newComp = {
       name: "",
@@ -42,7 +74,10 @@ export class CreateCompetitionComponent {
       groups: [],
       unassignedParticipants: []
     };
-    this.createNew.set(false);
+
+    // TODO: save on backend
+
+    this.createOrEdit.set(false);
   }
 
 }

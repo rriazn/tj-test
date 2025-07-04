@@ -9,22 +9,6 @@ import { DateTime } from 'luxon';
   templateUrl: './competition.component.html',
   styleUrl: './competition.component.scss'
 })
-export class CompetitionComponent implements OnInit {
-  ngOnInit(): void {
-    this.dateString = this.competition().date.toISODate();
-  }
+export class CompetitionComponent {
   competition = input.required<Competition>();
-
-  editMode = signal<boolean>(false);
-
-  dateString: string | null = null;
-
-  toggleEdit() {
-    this.editMode.set(!this.editMode());
-    if (this.dateString?.trim()) {
-      this.competition().date = DateTime.fromISO(this.dateString);
-    }
-  }
-
-  
 }

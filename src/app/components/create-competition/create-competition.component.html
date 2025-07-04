@@ -3,13 +3,17 @@
     <div  class="inner">
         @for (comp of competitions; track $index) {
             <div class="comp">
-                <app-competition [competition]="comp"/>
+                <app-competition [competition]="comp" class="comp-inner"/>
+                <div class="images">
+                    <img src="./assets/edit.png" (click)="editComp(comp)" />
+                    <img src="./assets/trash.png" (click)="deleteComp(comp)"/>
+                </div>
             </div>
         }
     </div>
     <button (click)="createNewComp()">New Competition</button>
 </div>
-@if(createNew()) {
+@if(createOrEdit()) {
     <div class="create-outer">
         <input type="text" placeholder="competition title" [(ngModel)]="newComp.name">
         <input type="date" placeholder="date" [(ngModel)]="newDate">  

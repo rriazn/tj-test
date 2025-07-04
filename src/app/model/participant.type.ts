@@ -1,7 +1,8 @@
 import { DateTime } from 'luxon';
 
 export type Participant = {
-    firstName: string,
-    lastName: string,
-    dateOfBirth: DateTime,
+    Vorname: string,
+    Nachname: string,
+    Geburtsdatum: DateTime,
+    Verein: string
 }
