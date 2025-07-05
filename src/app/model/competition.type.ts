@@ -8,4 +8,5 @@ export type Competition = {
     date: DateTime,
     groups: Group[],
     unassignedParticipants: Participant[]
+    id: number;
 }

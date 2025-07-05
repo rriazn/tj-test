@@ -24,7 +24,8 @@ export class CreateCompetitionComponent {
       name: "",
       date: DateTime.local(),
       groups: [],
-      unassignedParticipants: []
+      unassignedParticipants: [],
+      id: Math.max(... this.competitions.map((comp) => comp.id)) + 1
     };
   newDate = DateTime.local().toISODate();
 
@@ -38,7 +39,8 @@ export class CreateCompetitionComponent {
           name: "",
           date: DateTime.local(),
           groups: [],
-          unassignedParticipants: []
+          unassignedParticipants: [],
+          id: Math.max(... this.competitions.map((comp) => comp.id)) + 1
         };
       }
     }
@@ -66,18 +68,21 @@ export class CreateCompetitionComponent {
   }
 
   saveComp() {
-    this.competitions = this.competitions.filter((entry) => entry.name != this.newComp.name);
+    this.competitions = this.competitions.filter((entry) => entry.id != this.newComp.id);
+    this.newComp.date = DateTime.fromISO(this.newDate);
     this.competitions = [...this.competitions, this.newComp];
     this.newComp = {
       name: "",
       date: DateTime.local(),
       groups: [],
-      unassignedParticipants: []
+      unassignedParticipants: [],
+      id: Math.max(... this.competitions.map((comp) => comp.id)) + 1
     };
-
+    
     // TODO: save on backend
 
     this.createOrEdit.set(false);
+    this.newDate = DateTime.local().toISODate();
   }
 
 }

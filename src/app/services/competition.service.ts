@@ -18,13 +18,15 @@ export class CompetitionService {
       name: this.name,
       date: this.date,
       groups: this.groups,
-      unassignedParticipants: this.part
+      unassignedParticipants: this.part,
+      id: 0
     },
     {
       name: "www",
       date: this.date,
       groups: [],
-      unassignedParticipants: []
+      unassignedParticipants: [],
+      id: 1
     }];
   }
 }
