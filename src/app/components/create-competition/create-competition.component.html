@@ -11,14 +11,28 @@
             </div>
         }
     </div>
-    <button (click)="createNewComp()">New Competition</button>
+    <button class="big-button" (click)="createNewComp()">New Competition</button>
 </div>
 @if(createOrEdit()) {
     <div class="create-outer">
-        <input type="text" placeholder="competition title" [(ngModel)]="newComp.name">
-        <input type="date" placeholder="date" [(ngModel)]="newDate">  
+        <div class="name-date">
+            <input type="text" placeholder="competition title" [(ngModel)]="newCompName">
+            <input type="date" placeholder="date" [(ngModel)]="newDate">
+        </div>  
         <app-upload></app-upload>
-        Configure Groups
-        <button (click)="saveComp()">Save</button>
+        <div class="create-groups">
+            Configure Groups
+            <ul>
+                @for(group of newGroups; track $index) {
+                    <li>
+                        {{group.title}}
+                        <img src="./assets/trash.png" (click)="deleteGroup(group)"/>
+                    </li>
+                }
+            </ul>
+            <input type="text" placeholder="new group name" [(ngModel)]="groupName" (keydown)="onEnter($event)">
+            <button (click)="addGroup()">+</button>
+        </div>
+        <button class="big-button" (click)="saveComp()">Save</button>
     </div>
 }

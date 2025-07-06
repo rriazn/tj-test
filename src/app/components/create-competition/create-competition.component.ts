@@ -6,6 +6,8 @@ import { DateTime } from 'luxon';
 import { FormsModule } from '@angular/forms';
 import { NgIf } from '@angular/common';
 import { UploadComponent } from './upload/upload.component';
+import { Group } from '../../model/group.type';
+import { Participant } from '../../model/participant.type';
 
 @Component({
   selector: 'app-create-competition',
@@ -19,15 +21,14 @@ export class CreateCompetitionComponent {
   competitions = this.competitionService.getCompetitions();
 
   createOrEdit = signal<Boolean>(false);
+  
+  newCompName: string = "";
+  newDate: string | null = DateTime.local().toISODate();
+  newGroups: Array<Group> = [];
+  newUnassignedParticipants: Array<Participant> = [];
+  currId: number = Math.max(... this.competitions.map((comp) => comp.id)) + 1;
 
-  newComp: Competition = {
-      name: "",
-      date: DateTime.local(),
-      groups: [],
-      unassignedParticipants: [],
-      id: Math.max(... this.competitions.map((comp) => comp.id)) + 1
-    };
-  newDate = DateTime.local().toISODate();
+  groupName: string = "";
 
   createNewComp() {
     if(!this.createOrEdit()) {
@@ -35,13 +36,10 @@ export class CreateCompetitionComponent {
     } else {
       const confirm = window.confirm(`You have unsaved progress which will be lost if you continue.`);
       if(confirm) {
-        this.newComp = {
-          name: "",
-          date: DateTime.local(),
-          groups: [],
-          unassignedParticipants: [],
-          id: Math.max(... this.competitions.map((comp) => comp.id)) + 1
-        };
+        this.newCompName = "";
+        this.newDate = DateTime.local().toISODate();
+        this.newGroups = [];
+        this.newUnassignedParticipants = [];
       }
     }
   }
@@ -54,8 +52,11 @@ export class CreateCompetitionComponent {
       }
     }
     this.createOrEdit.set(true);
-    this.newComp = comp;
-  
+    this.newCompName = comp.name;
+    this.newDate = comp.date.toISODate();
+    this.newGroups = window.structuredClone(comp.groups);
+    this.newUnassignedParticipants = window.structuredClone(comp.unassignedParticipants);
+    this.currId = comp.id;
   }
 
   deleteComp(comp: Competition) {
@@ -68,21 +69,50 @@ export class CreateCompetitionComponent {
   }
 
   saveComp() {
-    this.competitions = this.competitions.filter((entry) => entry.id != this.newComp.id);
-    this.newComp.date = DateTime.fromISO(this.newDate);
-    this.competitions = [...this.competitions, this.newComp];
-    this.newComp = {
-      name: "",
-      date: DateTime.local(),
-      groups: [],
-      unassignedParticipants: [],
-      id: Math.max(... this.competitions.map((comp) => comp.id)) + 1
-    };
+    this.competitions = this.competitions.filter((entry) => entry.id != this.currId);
+    if(this.newDate?.slice()) {
+      const newComp: Competition = {
+        name: this.newCompName,
+        date: DateTime.fromISO(this.newDate),
+        groups: this.newGroups,
+        unassignedParticipants: this.newUnassignedParticipants,
+        id: this.currId
+      }
+      this.competitions = [...this.competitions, newComp];
+      this.newCompName = "";
+      this.newDate = DateTime.local().toISODate();
+      this.newGroups = [];
+      this.newUnassignedParticipants = [];
+    }
     
     // TODO: save on backend
 
     this.createOrEdit.set(false);
     this.newDate = DateTime.local().toISODate();
+  }
+
+  onEnter(event: KeyboardEvent) {
+    if (event.key === 'Enter') {
+      this.addGroup();
+    }
+  }
+
+  addGroup() {
+    if(this.groupName != "") {
+      this.newGroups = [...this.newGroups, {
+        title: this.groupName,
+        participants: []
+      }];
+      this.groupName = "";
+    } 
+    
+  }
+
+  deleteGroup(group: Group) {
+    const confirm = window.confirm(`Are you sure you want to delete "${group.title}"?\nThis action cannot be reversed.`);
+    if(confirm) {
+      this.newGroups = this.newGroups.filter((entry) => entry != group);
+    }
   }
 
 }
