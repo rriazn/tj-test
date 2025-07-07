@@ -91,6 +91,11 @@ export class CreateCompetitionComponent {
     this.newDate = DateTime.local().toISODate();
   }
 
+  getParticipants(parts: Participant[]) {
+    this.newUnassignedParticipants = this.newUnassignedParticipants.concat(parts);
+    console.log(this.newUnassignedParticipants);
+  }
+
   onEnter(event: KeyboardEvent) {
     if (event.key === 'Enter') {
       this.addGroup();

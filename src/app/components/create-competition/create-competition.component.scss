@@ -75,4 +75,67 @@ button:hover {
   background-color: rgb(221, 221, 221);;
 }
 
+.name-date {
+  padding-bottom: 10px;
+}
+
+.app-upload {
+  padding-top: 10px;
+  padding-bottom: 10px;
+  border-top: 2px solid rgb(122, 122, 122);
+  border-bottom: 2px solid rgb(122, 122, 122);
+}
+
+.create-groups {
+  padding-top: 10px;
+  padding-bottom: 10px;
+  border-bottom: 2px solid rgb(122, 122, 122);
+
+
+  .input-group {
+    padding-top: 10px;
+    button {
+      background-color: #007bff;
+      color: white;
+      border: none;
+      cursor: pointer;
+      border-radius: 5px;
+    }
+
+    button:hover {
+      background-color: #0056b3;
+    }
+  }
+}
+
+.group-list {
+  display: flex;
+  flex-direction: column;
+  border-left: 3px solid rgb(122, 122, 122);
+  border-right: 3px solid rgb(122, 122, 122);
+  border-top: 2px solid rgb(122, 122, 122);
+  padding: 0;
+  margin: 0;
+  li {
+    display: flex;
+    flex-direction: row;
+    list-style: none;
+    padding-top: 5px;
+    border-bottom: 2px solid rgb(122, 122, 122);
+    padding-left: 5%;
+    
+    .images {
+        display: flex;
+        flex-direction: column;
+        width: 3%;
+        justify-content: center;
+        margin-left: 2%;
+        img {
+          margin-bottom: 10px;
+          cursor: pointer;
+        }
+      }
+  }
+}
+
 

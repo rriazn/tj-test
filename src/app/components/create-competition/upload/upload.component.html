@@ -1,7 +1,7 @@
-<label for="participants">Upload participants:</label>
+<label for="participants"><h3>Upload participants:</h3></label>
 <div class="drop-zone" (dragover)="onDragOver($event)" (drop)="onDrop($event)" (click)="triggerFileInput()">
     <p>Drag and drop participants here, or click to select</p>
-    <input type="file" id="participants" multiple hidden #fileInput (change)="onFilesSelected($event)">
+    <input type="file" id="participants" accept=".xlsx" multiple hidden #fileInput (change)="onFilesSelected($event)">
 </div>
 @if(files.length > 0) {
     <h3>Preview:</h3>
@@ -10,4 +10,7 @@
             <li>{{file.name}}</li>
         }
     </ul>
+    <div class="button">
+        <button (click)="uploadExcel()">Upload</button>
+    </div>
 }

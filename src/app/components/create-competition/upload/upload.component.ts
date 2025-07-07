@@ -1,5 +1,7 @@
 import { NgFor, NgIf } from '@angular/common';
-import { Component, ElementRef, ViewChild } from '@angular/core';
+import { Component, ElementRef, EventEmitter, inject, Output, ViewChild } from '@angular/core';
+import { ConvertExcelService } from '../../../convert-excel.service';
+import { Participant } from '../../../model/participant.type';
 
 @Component({
   selector: 'app-upload',
@@ -8,7 +10,11 @@ import { Component, ElementRef, ViewChild } from '@angular/core';
   styleUrl: './upload.component.scss'
 })
 export class UploadComponent {
+  convertService = inject(ConvertExcelService);
   @ViewChild('fileInput') fileInput!: ElementRef<HTMLInputElement>;
+  @Output() participantsOutput = new EventEmitter<Participant[]>();
+
+  participants: Participant[] = [];
   files: File[] = [];
 
   onDragOver(event: DragEvent) {
@@ -46,5 +52,17 @@ export class UploadComponent {
     this.files.push(
       ...newFiles.filter(file => !existingFileNames.has(file.name))
     );
+  }
+
+
+
+  uploadExcel() {
+    for(const file of this.files) {
+      this.convertService.parseParticipantsExcel(file).then((parts) => {
+        this.participants = this.participants.concat(parts);
+      });
+    }
+
+    this.participantsOutput.emit(this.participants);
   }
 }

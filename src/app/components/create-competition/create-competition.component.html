@@ -19,19 +19,24 @@
             <input type="text" placeholder="competition title" [(ngModel)]="newCompName">
             <input type="date" placeholder="date" [(ngModel)]="newDate">
         </div>  
-        <app-upload></app-upload>
+        <app-upload (participantsOutput)="getParticipants($event)" class="app-upload" />
         <div class="create-groups">
-            Configure Groups
-            <ul>
+            <h3>Configure Groups</h3>
+            <ul class="group-list">
                 @for(group of newGroups; track $index) {
                     <li>
                         {{group.title}}
-                        <img src="./assets/trash.png" (click)="deleteGroup(group)"/>
+                        <div class="images">
+                            <img src="./assets/trash.png" (click)="deleteGroup(group)"/>
+                        </div>
+                        
                     </li>
                 }
             </ul>
-            <input type="text" placeholder="new group name" [(ngModel)]="groupName" (keydown)="onEnter($event)">
-            <button (click)="addGroup()">+</button>
+            <div class="input-group">
+                <input type="text" placeholder="new group name" [(ngModel)]="groupName" (keydown)="onEnter($event)">
+                <button (click)="addGroup()">+</button>
+            </div>
         </div>
         <button class="big-button" (click)="saveComp()">Save</button>
     </div>
