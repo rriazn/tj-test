@@ -56,13 +56,21 @@ export class UploadComponent {
 
 
 
-  uploadExcel() {
-    for(const file of this.files) {
-      this.convertService.parseParticipantsExcel(file).then((parts) => {
-        this.participants = this.participants.concat(parts);
-      });
+  async uploadExcel() {
+    const parsePromises = [];
+
+    for (const file of this.files) {
+      const promise = this.convertService.parseParticipantsExcel(file);
+      parsePromises.push(promise);
     }
 
+  
+    const allParts = await Promise.all(parsePromises);
+
+    
+    this.participants = allParts.flat();
+
+  
     this.participantsOutput.emit(this.participants);
   }
 }

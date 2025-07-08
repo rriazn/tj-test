@@ -30,7 +30,7 @@ export class ConvertExcelService {
           Vorname: row['Vorname'],
           Nachname: row['Nachname'],
           Verein: row['Verein'],
-          Übung: row['Übung'],
+          Uebung: row['Übung'],
           Geburtsdatum: DateTime.fromObject({year: 1900, month: 1, day: 1}).plus({days: row['Geburtsdatum'] - 2}) // convert Excel Date Format
         })
       );

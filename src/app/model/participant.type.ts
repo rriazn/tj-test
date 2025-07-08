@@ -5,5 +5,5 @@ export type Participant = {
     Nachname: string,
     Geburtsdatum: DateTime,
     Verein: string,
-    Übung: string
+    Uebung: string
 }

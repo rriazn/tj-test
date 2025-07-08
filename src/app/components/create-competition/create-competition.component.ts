@@ -93,7 +93,7 @@ export class CreateCompetitionComponent {
 
   getParticipants(parts: Participant[]) {
     this.newUnassignedParticipants = this.newUnassignedParticipants.concat(parts);
-    console.log(this.newUnassignedParticipants);
+
   }
 
   onEnter(event: KeyboardEvent) {
@@ -118,6 +118,14 @@ export class CreateCompetitionComponent {
     if(confirm) {
       this.newGroups = this.newGroups.filter((entry) => entry != group);
     }
+  }
+
+  deleteParticipant(part: Participant) {
+    this.newUnassignedParticipants = this.newUnassignedParticipants.filter((e) => e != part);
+  }
+
+  deleteParticipantFromGroup(part: Participant, group: Group) {
+    this.newGroups.map((g) => g == group ? g.participants.filter((e) => e != part) : g)
   }
 
 }
