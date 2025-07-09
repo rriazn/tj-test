@@ -38,32 +38,55 @@
                 <button (click)="addGroup()">+</button>
             </div>
         </div>
-        <div class="configure-groups">
+        <div class="configure-groups" cdkDropListGroup>
+
+        <!-- Unassigned Participants -->
             <div class="unassigned-parts">
-                <h3>unassigned Participants:</h3>
-                <ul class="unassigned-part-list">
-                    @for(part of newUnassignedParticipants; track $index) {
-                        <li>
-
-                                <div class="part">{{part.Nachname}}, {{part.Vorname}} {{part.Geburtsdatum.year.toString()}} {{part.Uebung}}</div>
-                                <div class="images"><img src="./assets/trash.png" (click)="deleteParticipant(part)"/></div>
-
+                <h3>Unassigned Participants:</h3>
+                <ul 
+                cdkDropList 
+                [cdkDropListData]="newUnassignedParticipants"
+                (cdkDropListDropped)="drop($event)"
+                class="drop-list"
+                >
+                    @for (part of newUnassignedParticipants; track $index) {
+                        <li cdkDrag>
+                            <div class="part">
+                                {{part.Nachname}}, {{part.Vorname}} {{part.Geburtsdatum.year}} {{part.Uebung}}
+                            </div>
+                            <div class="images">
+                                <img src="./assets/trash.png" (click)="deleteParticipant(part)" />
+                            </div>
                         </li>
                     }
                 </ul>
             </div>
+
+            <!-- Groups -->
             <div class="groups-parts">
                 <h3>Groups:</h3>
                 <ul class="assigned-part-list">
-                    @for(group of newGroups; track $index) {
+                    @for (group of newGroups; track $index) {
+                        <h4>{{group.title}}</h4>
                         <li>
-                            <h4>{{group.title}}</h4>
-                            <div>
-                                @for(part of group.participants; track $index) {
-                                    
-                                }
-                            </div>
                             
+                            <ul 
+                                cdkDropList 
+                                [cdkDropListData]="group.participants"
+                                (cdkDropListDropped)="drop($event)"
+                                class="drop-list"
+                            >
+                                @for (part of group.participants; track $index) {
+                                    <li cdkDrag>
+                                        <div class="part">
+                                            {{part.Nachname}}, {{part.Vorname}} {{part.Geburtsdatum.year}} {{part.Uebung}}
+                                        </div>
+                                        <div class="images">
+                                            <img src="./assets/trash.png" (click)="deleteParticipantFromGroup(part, group)" />
+                                        </div>
+                                    </li>
+                                }
+                            </ul>
                         </li>
                     }
                 </ul>

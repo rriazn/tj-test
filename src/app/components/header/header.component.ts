@@ -1,6 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { LoginService } from '../../services/login.service';
-import { RouterLink, RouterModule } from '@angular/router';
+import { Router, RouterLink, RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-header',
@@ -10,8 +10,10 @@ import { RouterLink, RouterModule } from '@angular/router';
 })
 export class HeaderComponent {
   loginService = inject(LoginService);
+  router = inject(Router);
   logout() {
     localStorage.setItem('token', '');
     this.loginService.currentUserSignal.set(null);
+    this.router.navigateByUrl('/');
   }
 }

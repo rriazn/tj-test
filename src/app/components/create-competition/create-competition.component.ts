@@ -8,10 +8,11 @@ import { NgIf } from '@angular/common';
 import { UploadComponent } from './upload/upload.component';
 import { Group } from '../../model/group.type';
 import { Participant } from '../../model/participant.type';
+import {CdkDragDrop, DragDropModule, moveItemInArray, transferArrayItem} from '@angular/cdk/drag-drop';
 
 @Component({
   selector: 'app-create-competition',
-  imports: [CompetitionComponent, FormsModule, UploadComponent],
+  imports: [CompetitionComponent, FormsModule, UploadComponent, DragDropModule],
   templateUrl: './create-competition.component.html',
   styleUrl: './create-competition.component.scss'
 })
@@ -128,4 +129,17 @@ export class CreateCompetitionComponent {
     this.newGroups.map((g) => g == group ? g.participants.filter((e) => e != part) : g)
   }
 
+
+  drop(event: CdkDragDrop<Participant[]>) {
+    if (event.previousContainer === event.container) {
+      moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
+    } else {
+      transferArrayItem(
+        event.previousContainer.data,
+        event.container.data,
+        event.previousIndex,
+        event.currentIndex,
+      );
+    }
+  }
 }
