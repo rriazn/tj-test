@@ -22,17 +22,19 @@
         <app-upload (participantsOutput)="getParticipants($event)" class="app-upload" />
         <div class="create-groups">
             <h3>Configure Groups</h3>
-            <ul class="group-list">
-                @for(group of newGroups; track $index) {
-                    <li>
-                        {{group.title}}
-                        <div class="images">
-                            <img src="./assets/trash.png" (click)="deleteGroup(group)"/>
-                        </div>
-                        
-                    </li>
-                }
-            </ul>
+            @if(newGroups.length > 0) {
+                 <ul class="group-list">
+                    @for(group of newGroups; track $index) {
+                        <li>
+                            {{group.title}}
+                            <div class="images">
+                                <img src="./assets/trash.png" (click)="deleteGroup(group)"/>
+                            </div>
+                            
+                        </li>
+                    }
+                </ul>
+            }
             <div class="input-group">
                 <input type="text" placeholder="new group name" [(ngModel)]="groupName" (keydown)="onEnter($event)">
                 <button (click)="addGroup()">+</button>

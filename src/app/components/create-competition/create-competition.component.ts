@@ -126,7 +126,11 @@ export class CreateCompetitionComponent {
   }
 
   deleteParticipantFromGroup(part: Participant, group: Group) {
-    this.newGroups.map((g) => g == group ? g.participants.filter((e) => e != part) : g)
+    this.newGroups.map((g) => {
+      if(g == group) {
+        g.participants = g.participants.filter((p) => p != part);
+      }
+    })
   }
 
 

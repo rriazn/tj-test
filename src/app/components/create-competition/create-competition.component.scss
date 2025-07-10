@@ -103,17 +103,19 @@ button:hover {
     .group-list {
       display: flex;
       flex-direction: column;
-      border-left: 3px solid rgb(122, 122, 122);
-      border-right: 3px solid rgb(122, 122, 122);
-      border-top: 2px solid rgb(122, 122, 122);
+      border-left: 1px solid #ccc;
+      border-right: 1px solid #ccc;
+      border-top: 1px solid #ccc;
       padding: 0;
       margin: 0;
+      border-radius: 4px;
       li {
         display: flex;
         flex-direction: row;
         list-style: none;
         padding-top: 5px;
-        border-bottom: 2px solid rgb(122, 122, 122);
+        border-bottom: 1px solid #ccc;
+        background-color: white;
         padding-left: 5%;
     
         .images {
@@ -141,23 +143,62 @@ button:hover {
 
   .groups-parts {
     width: 48%;
+    ul {
+      padding: 0;
+      margin: 0;
+      overflow: hidden;
+      h4 {
+        margin-top: 5px;
+        color: rgb(122, 122, 122);
+        margin-bottom: 0;
+      }
+      li {
+        list-style: none;
+        ul {
+          padding: 0;
+          margin: 0;
+          overflow: hidden;
+          li {
+            list-style: none;
+            padding: 20px 10px;
+            border-bottom: solid 1px #ccc;
+            color: black;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: space-between;
+            box-sizing: border-box;
+            
+            background: white;
+            font-size: 14px;
+            .images {
+              display: flex;
+              flex-direction: column;
+              justify-content: center;
+              width: 5%;
+              margin-left: 2%;
+
+              img {
+                cursor: pointer;
+              }
+            }
+          }
+        }
+      }
+    }
   }
 
-  .unassigned-parts ul,
-  .groups-parts ul {
+  .unassigned-parts ul {
     padding: 0;
     margin: 0;
     overflow: hidden;
-    h4 {
-        color: rgb(122, 122, 122);
-        margin: 0;
-      }
+    
 
     li {
       list-style: none;
       padding: 20px 10px;
       border-bottom: solid 1px #ccc;
-      color: rgba(0, 0, 0, 0.87);
+      color: black;
       display: flex;
       flex-direction: row;
       align-items: center;
@@ -202,6 +243,29 @@ button:hover {
   box-shadow: 0 5px 5px -3px rgba(0, 0, 0, 0.2),
               0 8px 10px 1px rgba(0, 0, 0, 0.14),
               0 3px 14px 2px rgba(0, 0, 0, 0.12);
+  
+  list-style: none;
+  padding: 20px 10px;
+  border-bottom: solid 1px #ccc;
+  color: black;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  box-sizing: border-box;
+  
+  background: white;
+  font-size: 14px;
+  .images {
+    display: flex;
+    flex-direction: column;
+    width: 0%;
+    justify-content: center;
+    margin-left: 2%;
+    img {
+      margin-bottom: 10px;
+    }   
+  }
 }
 
 .cdk-drag-placeholder {
