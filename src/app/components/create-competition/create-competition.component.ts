@@ -117,6 +117,7 @@ export class CreateCompetitionComponent {
   deleteGroup(group: Group) {
     const confirm = window.confirm(`Are you sure you want to delete "${group.title}"?\nThis action cannot be reversed.`);
     if(confirm) {
+      this.newUnassignedParticipants = this.newUnassignedParticipants.concat(group.participants);
       this.newGroups = this.newGroups.filter((entry) => entry != group);
     }
   }
