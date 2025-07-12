@@ -6,7 +6,7 @@
                 <li class="clickable" routerLink="/login">login</li>
             } @else if(loginService.currentUserSignal()) {
                 <li>{{loginService.currentUserSignal()?.username}}</li>
-                <li class="clickable" routerLink="/create-competition">create competition</li>
+                <li class="clickable" routerLink="/manage-competitions">manage competitions</li>
                 <li class="clickable" (click)="logout()">logout</li>
             }
         </ul>

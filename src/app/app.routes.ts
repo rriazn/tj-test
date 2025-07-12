@@ -10,7 +10,7 @@ export const routes: Routes = [
         },
     },
     {
-        path: 'create-competition',
+        path: 'manage-competitions',
         pathMatch: 'full',
         canMatch: [createCompetitionGuard],
         loadComponent: () => {
