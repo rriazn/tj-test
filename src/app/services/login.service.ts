@@ -12,13 +12,13 @@ export class LoginService {
   currentUserSignal = signal<UserInterface | undefined | null>(undefined);
 
   async verifyAdmin(): Promise<boolean> {
-  try {
-    const response = await firstValueFrom(
-      this.http.get('http://localhost:3000/admin', { responseType: 'text' })
-    );
-    return true;
-  } catch (error) {
-    return false;
+    try {
+      const response = await firstValueFrom(
+        this.http.get('http://localhost:3000/admin', { responseType: 'text' })
+      );
+      return true;
+    } catch (error) {
+      return false;
+    }
   }
-}
 }

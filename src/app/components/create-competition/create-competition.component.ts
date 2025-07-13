@@ -80,13 +80,14 @@ export class CreateCompetitionComponent {
         id: this.currId
       }
       this.competitions = [...this.competitions, newComp];
+      this.competitionService.saveCompetition(newComp);
       this.newCompName = "";
       this.newDate = DateTime.local().toISODate();
       this.newGroups = [];
       this.newUnassignedParticipants = [];
     }
     
-    // TODO: save on backend
+    
 
     this.createOrEdit.set(false);
     this.newDate = DateTime.local().toISODate();

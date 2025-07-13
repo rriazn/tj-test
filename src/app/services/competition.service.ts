@@ -1,6 +1,7 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { Competition } from '../model/competition.type';
 import { DateTime } from 'luxon';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
@@ -8,6 +9,8 @@ import { DateTime } from 'luxon';
 export class CompetitionService {
 
   constructor() { }
+  http = inject(HttpClient);
+
   name: string = "Test";
   date = DateTime.local();
   groups = [];
@@ -28,5 +31,9 @@ export class CompetitionService {
       unassignedParticipants: [],
       id: 1
     }];
+  }
+
+  saveCompetition(comp: Competition) {
+    this.http.post("http://localhost:3000/save-competition", {competition: comp}, { responseType: 'text' }).subscribe();
   }
 }
