@@ -34,6 +34,10 @@ export class CompetitionService {
   }
 
   saveCompetition(comp: Competition) {
-    this.http.post("http://localhost:3000/save-competition", {competition: comp}, { responseType: 'text' }).subscribe();
+    return this.http.post("http://localhost:3000/save-competition", {competition: comp}, { responseType: 'text' });
+  }
+
+  deleteCompetition(comp: Competition) {
+    return this.http.post("http://localhost:3000/delete-competition", {id: comp.id}, { responseType: 'text' });
   }
 }

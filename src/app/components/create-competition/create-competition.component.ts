@@ -9,6 +9,7 @@ import { UploadComponent } from './upload/upload.component';
 import { Group } from '../../model/group.type';
 import { Participant } from '../../model/participant.type';
 import {CdkDragDrop, DragDropModule, moveItemInArray, transferArrayItem} from '@angular/cdk/drag-drop';
+import { catchError } from 'rxjs';
 
 @Component({
   selector: 'app-create-competition',
@@ -63,14 +64,20 @@ export class CreateCompetitionComponent {
   deleteComp(comp: Competition) {
     const confirm = window.confirm(`Are you sure you want to delete "${comp.name}"?\nThis action cannot be reversed.`);
     if(confirm) {
-      this.competitions = this.competitions.filter((entry) => entry != comp);
+      
 
-      // TODO: delete from backend
+      this.competitionService.deleteCompetition(comp).pipe(
+        catchError((error) => {
+          throw(error);
+        }
+        )).subscribe((resp) => {
+          this.competitions = this.competitions.filter((entry) => entry != comp);
+        });
     }
   }
 
   saveComp() {
-    this.competitions = this.competitions.filter((entry) => entry.id != this.currId);
+    
     if(this.newDate?.slice()) {
       const newComp: Competition = {
         name: this.newCompName,
@@ -79,18 +86,25 @@ export class CreateCompetitionComponent {
         unassignedParticipants: this.newUnassignedParticipants,
         id: this.currId
       }
-      this.competitions = [...this.competitions, newComp];
-      this.competitionService.saveCompetition(newComp);
-      this.newCompName = "";
-      this.newDate = DateTime.local().toISODate();
-      this.newGroups = [];
-      this.newUnassignedParticipants = [];
+      
+      this.competitionService.saveCompetition(newComp).pipe(
+        catchError((error) => {
+            throw(error);
+        })).subscribe((resp) => { 
+          this.competitions = this.competitions.filter((entry) => entry.id != this.currId);       
+          this.competitions = [...this.competitions, newComp];
+          this.newCompName = "";
+          this.newDate = DateTime.local().toISODate();
+          this.newGroups = [];
+          this.newUnassignedParticipants = [];
+          this.createOrEdit.set(false);
+      });
+      
     }
     
     
 
-    this.createOrEdit.set(false);
-    this.newDate = DateTime.local().toISODate();
+    
   }
 
   getParticipants(parts: Participant[]) {
