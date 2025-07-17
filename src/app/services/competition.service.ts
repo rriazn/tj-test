@@ -16,21 +16,8 @@ export class CompetitionService {
   groups = [];
   part = [];
 
-  getCompetitions(): Array<Competition> {
-    return [{
-      name: this.name,
-      date: this.date,
-      groups: this.groups,
-      unassignedParticipants: this.part,
-      id: 0
-    },
-    {
-      name: "www",
-      date: this.date,
-      groups: [],
-      unassignedParticipants: [],
-      id: 1
-    }];
+  getCompetitions() {
+    return this.http.get<Array<Competition>>("http://localhost:3000/get-competitions");
   }
 
   saveCompetition(comp: Competition) {

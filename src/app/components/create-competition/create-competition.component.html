@@ -16,7 +16,7 @@
 @if(createOrEdit()) {
     <div class="create-outer">
         <div class="name-date">
-            <input type="text" placeholder="competition title" [(ngModel)]="newCompName">
+            <input type="text" placeholder="competition title" [(ngModel)]="newCompName"> {{currId}}
             <input type="date" placeholder="date" [(ngModel)]="newDate">
         </div>  
         <app-upload (participantsOutput)="getParticipants($event)" class="app-upload" />

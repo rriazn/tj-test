@@ -1,4 +1,4 @@
-import { Component, ElementRef, inject, signal, ViewChild } from '@angular/core';
+import { Component, ElementRef, inject, OnInit, signal, ViewChild } from '@angular/core';
 import { CompetitionService } from '../../services/competition.service';
 import { CompetitionComponent } from './competition/competition.component';
 import { Competition } from '../../model/competition.type';
@@ -17,10 +17,20 @@ import { catchError } from 'rxjs';
   templateUrl: './create-competition.component.html',
   styleUrl: './create-competition.component.scss'
 })
-export class CreateCompetitionComponent {
+export class CreateCompetitionComponent implements OnInit{
+  ngOnInit(): void {
+    this.competitionService.getCompetitions().pipe(
+      catchError((err) => {
+        throw err;
+      })
+    ).subscribe((comps) => {
+      this.competitions = comps;
+    });
+    
+  }
   competitionService = inject(CompetitionService);
 
-  competitions = this.competitionService.getCompetitions();
+  competitions: Array<Competition> = [];
 
   createOrEdit = signal<Boolean>(false);
   
@@ -28,13 +38,14 @@ export class CreateCompetitionComponent {
   newDate: string | null = DateTime.local().toISODate();
   newGroups: Array<Group> = [];
   newUnassignedParticipants: Array<Participant> = [];
-  currId: number = Math.max(... this.competitions.map((comp) => comp.id)) + 1;
+  currId: number = 0;
 
   groupName: string = "";
 
   createNewComp() {
     if(!this.createOrEdit()) {
       this.createOrEdit.set(true);
+      this.currId = Math.max(... this.competitions.map((comp) => comp.id)) + 1;
     } else {
       const confirm = window.confirm(`You have unsaved progress which will be lost if you continue.`);
       if(confirm) {
@@ -72,6 +83,7 @@ export class CreateCompetitionComponent {
         }
         )).subscribe((resp) => {
           this.competitions = this.competitions.filter((entry) => entry != comp);
+          this.currId = comp.id;
         });
     }
   }
