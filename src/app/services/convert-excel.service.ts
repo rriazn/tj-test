@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
-import { Participant } from './model/participant.type';
+
 import * as XLSX from 'xlsx';
 import { DateTime } from 'luxon';
+import { Participant } from '../model/participant.type';
 
 @Injectable({
   providedIn: 'root'
@@ -31,14 +32,9 @@ export class ConvertExcelService {
           Nachname: row['Nachname'],
           Verein: row['Verein'],
           Uebung: row['Übung'],
-          Geburtsdatum: DateTime.fromObject({year: 1900, month: 1, day: 1}).plus({days: row['Geburtsdatum'] - 2}) // convert Excel Date Format
+          Geburtsdatum: DateTime.fromObject({year: 1900, month: 1, day: 1}).plus({days: row['Geburtsdatum'] - 2}).toISODate()
         })
       );
-
-        
-        const valid = participants.filter(p => p.Geburtsdatum.isValid);
-
-        resolve(valid);
         
       } catch (err) {
         console.error(err);

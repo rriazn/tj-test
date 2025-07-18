@@ -5,7 +5,7 @@ import { Participant } from "./participant.type"
 
 export type Competition = {
     name: string,
-    date: DateTime,
+    date: string,
     groups: Group[],
     unassignedParticipants: Participant[]
     id: number;

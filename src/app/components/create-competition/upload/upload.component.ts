@@ -1,6 +1,6 @@
 import { NgFor, NgIf } from '@angular/common';
 import { Component, ElementRef, EventEmitter, inject, Output, ViewChild } from '@angular/core';
-import { ConvertExcelService } from '../../../convert-excel.service';
+import { ConvertExcelService } from '../../../services/convert-excel.service';
 import { Participant } from '../../../model/participant.type';
 
 @Component({

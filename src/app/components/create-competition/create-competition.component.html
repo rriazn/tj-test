@@ -16,7 +16,7 @@
 @if(createOrEdit()) {
     <div class="create-outer">
         <div class="name-date">
-            <input type="text" placeholder="competition title" [(ngModel)]="newCompName"> {{currId}}
+            <input type="text" placeholder="competition title" [(ngModel)]="newCompName"> 
             <input type="date" placeholder="date" [(ngModel)]="newDate">
         </div>  
         <app-upload (participantsOutput)="getParticipants($event)" class="app-upload" />
@@ -54,7 +54,7 @@
                     @for (part of newUnassignedParticipants; track $index) {
                         <li cdkDrag>
                             <div class="part">
-                                {{part.Nachname}}, {{part.Vorname}} {{part.Geburtsdatum.year}} {{part.Uebung}}
+                                {{part.Nachname}}, {{part.Vorname}} {{dateTime.fromISO(part.Geburtsdatum)}} {{part.Uebung}}
                             </div>
                             <div class="images">
                                 <img src="./assets/trash.png" (click)="deleteParticipant(part)" />
@@ -81,7 +81,7 @@
                                 @for (part of group.participants; track $index) {
                                     <li cdkDrag>
                                         <div class="part">
-                                            {{part.Nachname}}, {{part.Vorname}} {{part.Geburtsdatum.year}} {{part.Uebung}}
+                                            {{part.Nachname}}, {{part.Vorname}} {{dateTime.fromISO(part.Geburtsdatum)}} {{part.Uebung}}
                                         </div>
                                         <div class="images">
                                             <img src="./assets/trash.png" (click)="deleteParticipantFromGroup(part, group)" />

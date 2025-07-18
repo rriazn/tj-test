@@ -18,6 +18,7 @@ import { catchError } from 'rxjs';
   styleUrl: './create-competition.component.scss'
 })
 export class CreateCompetitionComponent implements OnInit{
+[x: string]: any;
   ngOnInit(): void {
     this.competitionService.getCompetitions().pipe(
       catchError((err) => {
@@ -66,7 +67,7 @@ export class CreateCompetitionComponent implements OnInit{
     }
     this.createOrEdit.set(true);
     this.newCompName = comp.name;
-    this.newDate = comp.date.toISODate();
+    this.newDate = comp.date;
     this.newGroups = window.structuredClone(comp.groups);
     this.newUnassignedParticipants = window.structuredClone(comp.unassignedParticipants);
     this.currId = comp.id;
@@ -75,15 +76,12 @@ export class CreateCompetitionComponent implements OnInit{
   deleteComp(comp: Competition) {
     const confirm = window.confirm(`Are you sure you want to delete "${comp.name}"?\nThis action cannot be reversed.`);
     if(confirm) {
-      
-
       this.competitionService.deleteCompetition(comp).pipe(
         catchError((error) => {
           throw(error);
         }
         )).subscribe((resp) => {
           this.competitions = this.competitions.filter((entry) => entry != comp);
-          this.currId = comp.id;
         });
     }
   }
@@ -93,7 +91,7 @@ export class CreateCompetitionComponent implements OnInit{
     if(this.newDate?.slice()) {
       const newComp: Competition = {
         name: this.newCompName,
-        date: DateTime.fromISO(this.newDate),
+        date: this.newDate,
         groups: this.newGroups,
         unassignedParticipants: this.newUnassignedParticipants,
         id: this.currId
