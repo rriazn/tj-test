@@ -1,4 +1,4 @@
-import { Component, input, OnInit, signal } from '@angular/core';
+import { Component, Input, input, OnInit, signal } from '@angular/core';
 import { Competition } from '../../../model/competition.type';
 import { FormsModule } from '@angular/forms';
 import { DateTime } from 'luxon';
@@ -11,4 +11,11 @@ import { DateTime } from 'luxon';
 })
 export class CompetitionComponent {
   competition = input.required<Competition>();
+  formattedDate: string = '';
+
+  ngOnInit() {
+    if (this.competition) {
+      this.formattedDate = DateTime.fromISO(this.competition().date).toFormat('dd.MM.yyyy');
+    }
+  }
 }

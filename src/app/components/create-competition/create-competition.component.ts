@@ -18,7 +18,7 @@ import { catchError } from 'rxjs';
   styleUrl: './create-competition.component.scss'
 })
 export class CreateCompetitionComponent implements OnInit{
-[x: string]: any;
+  dateTime = DateTime;
   ngOnInit(): void {
     this.competitionService.getCompetitions().pipe(
       catchError((err) => {
@@ -46,7 +46,12 @@ export class CreateCompetitionComponent implements OnInit{
   createNewComp() {
     if(!this.createOrEdit()) {
       this.createOrEdit.set(true);
-      this.currId = Math.max(... this.competitions.map((comp) => comp.id)) + 1;
+      if(this.competitions.length != 0) {
+        this.currId = Math.max(... this.competitions.map((comp) => comp.id)) + 1;
+      } else {
+        this.currId = 0;
+      }
+      
     } else {
       const confirm = window.confirm(`You have unsaved progress which will be lost if you continue.`);
       if(confirm) {
@@ -157,6 +162,10 @@ export class CreateCompetitionComponent implements OnInit{
         g.participants = g.participants.filter((p) => p != part);
       }
     })
+  }
+
+  getBirthYear(part: Participant) {
+    return DateTime.fromISO(part.birthDate).year;
   }
 
 

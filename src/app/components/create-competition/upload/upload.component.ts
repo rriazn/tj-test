@@ -58,7 +58,7 @@ export class UploadComponent {
 
   async uploadExcel() {
     const parsePromises = [];
-
+  
     for (const file of this.files) {
       const promise = this.convertService.parseParticipantsExcel(file);
       parsePromises.push(promise);
@@ -66,7 +66,7 @@ export class UploadComponent {
 
   
     const allParts = await Promise.all(parsePromises);
-
+    
     
     this.participants = allParts.flat();
 

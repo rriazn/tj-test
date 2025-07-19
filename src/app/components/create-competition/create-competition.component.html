@@ -1,3 +1,5 @@
+
+
 <div class="outer">
     <h1 class="headline">Competitions</h1>
     <div  class="inner">
@@ -23,7 +25,7 @@
         <div class="create-groups">
             <h3>Configure Groups</h3>
             @if(newGroups.length > 0) {
-                 <ul class="group-list">
+                <ul class="group-list">
                     @for(group of newGroups; track $index) {
                         <li>
                             {{group.title}}
@@ -54,7 +56,8 @@
                     @for (part of newUnassignedParticipants; track $index) {
                         <li cdkDrag>
                             <div class="part">
-                                {{part.Nachname}}, {{part.Vorname}} {{dateTime.fromISO(part.Geburtsdatum)}} {{part.Uebung}}
+                                
+                                {{part.lastName}}, {{part.firstName}} {{getBirthYear(part)}} {{part.setRoutine}}
                             </div>
                             <div class="images">
                                 <img src="./assets/trash.png" (click)="deleteParticipant(part)" />
@@ -81,7 +84,7 @@
                                 @for (part of group.participants; track $index) {
                                     <li cdkDrag>
                                         <div class="part">
-                                            {{part.Nachname}}, {{part.Vorname}} {{dateTime.fromISO(part.Geburtsdatum)}} {{part.Uebung}}
+                                            {{part.lastName}}, {{part.firstName}} {{getBirthYear(part)}} {{part.setRoutine}}
                                         </div>
                                         <div class="images">
                                             <img src="./assets/trash.png" (click)="deleteParticipantFromGroup(part, group)" />
