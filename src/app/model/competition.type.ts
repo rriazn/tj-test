@@ -8,5 +8,6 @@ export type Competition = {
     date: string,
     groups: Group[],
     unassignedParticipants: Participant[]
-    id: number;
+    id: number,
+    judges: JudgeConstellation
 }
