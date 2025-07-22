@@ -20,6 +20,13 @@
         <div class="name-date">
             <input type="text" placeholder="competition title" [(ngModel)]="newCompName"> 
             <input type="date" placeholder="date" [(ngModel)]="newDate">
+        </div>
+        <div class="judge-constellation">
+            <ul>
+                @for(member of JudgeConstVals; track $index) {
+                    <li><label><input type="radio" name="judge-constellation" [(ngModel)]="newJudgeConstellation" [value]="member">{{ member }}</label></li>
+                }
+            </ul>
         </div>  
         <app-upload (participantsOutput)="getParticipants($event)" class="app-upload" />
         <div class="create-groups">

@@ -1,4 +1,4 @@
-enum JudgeConstellation {
+export enum JudgeConstellation {
     Standart4ExecutionNoTOFNoHD = 'Standart, 4 Ausführung, Kein TOF/HD',
     Standart4ExecutionNoTOF1HD = 'Standart, 4 Ausführung, Kein TOF, 1 manueller HD',
     Standart6ExecutionNoTOFNoHD = 'Standart, 6 Ausführung, Kein TOF/HD',

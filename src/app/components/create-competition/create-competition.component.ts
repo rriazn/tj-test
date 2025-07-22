@@ -2,6 +2,7 @@ import { Component, ElementRef, inject, OnInit, signal, ViewChild } from '@angul
 import { CompetitionService } from '../../services/competition.service';
 import { CompetitionComponent } from './competition/competition.component';
 import { Competition } from '../../model/competition.type';
+import { JudgeConstellation } from '../../enums/judge-constellation';
 import { DateTime } from 'luxon';
 import { FormsModule } from '@angular/forms';
 import { NgIf } from '@angular/common';
@@ -18,6 +19,9 @@ import { catchError } from 'rxjs';
   styleUrl: './create-competition.component.scss'
 })
 export class CreateCompetitionComponent implements OnInit{
+  JudgeConst = JudgeConstellation;
+  JudgeConstVals = Object.values(JudgeConstellation);
+
   dateTime = DateTime;
   ngOnInit(): void {
     this.competitionService.getCompetitions().pipe(
@@ -39,9 +43,12 @@ export class CreateCompetitionComponent implements OnInit{
   newDate: string | null = DateTime.local().toISODate();
   newGroups: Array<Group> = [];
   newUnassignedParticipants: Array<Participant> = [];
+  newJudgeConstellation = JudgeConstellation.Standart4ExecutionNoTOFNoHD;
   currId: number = 0;
 
   groupName: string = "";
+
+  
 
   createNewComp() {
     if(!this.createOrEdit()) {
@@ -59,6 +66,12 @@ export class CreateCompetitionComponent implements OnInit{
         this.newDate = DateTime.local().toISODate();
         this.newGroups = [];
         this.newUnassignedParticipants = [];
+        this.newJudgeConstellation = JudgeConstellation.Standart4ExecutionNoTOFNoHD;
+        if(this.competitions.length != 0) {
+          this.currId = Math.max(... this.competitions.map((comp) => comp.id)) + 1;
+        } else {
+          this.currId = 0;
+        }
       }
     }
   }
@@ -75,6 +88,7 @@ export class CreateCompetitionComponent implements OnInit{
     this.newDate = comp.date;
     this.newGroups = window.structuredClone(comp.groups);
     this.newUnassignedParticipants = window.structuredClone(comp.unassignedParticipants);
+    this.newJudgeConstellation = comp.judges;
     this.currId = comp.id;
   }
 
@@ -99,7 +113,8 @@ export class CreateCompetitionComponent implements OnInit{
         date: this.newDate,
         groups: this.newGroups,
         unassignedParticipants: this.newUnassignedParticipants,
-        id: this.currId
+        id: this.currId,
+        judges: this.newJudgeConstellation
       }
       
       this.competitionService.saveCompetition(newComp).pipe(
@@ -112,6 +127,7 @@ export class CreateCompetitionComponent implements OnInit{
           this.newDate = DateTime.local().toISODate();
           this.newGroups = [];
           this.newUnassignedParticipants = [];
+          this.newJudgeConstellation = JudgeConstellation.Standart4ExecutionNoTOFNoHD;
           this.createOrEdit.set(false);
       });
       
