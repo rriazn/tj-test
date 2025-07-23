@@ -11,6 +11,8 @@ import { Group } from '../../model/group.type';
 import { Participant } from '../../model/participant.type';
 import {CdkDragDrop, DragDropModule, moveItemInArray, transferArrayItem} from '@angular/cdk/drag-drop';
 import { catchError } from 'rxjs';
+import { routes } from '../../app.routes';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-create-competition',
@@ -19,10 +21,14 @@ import { catchError } from 'rxjs';
   styleUrl: './create-competition.component.scss'
 })
 export class CreateCompetitionComponent implements OnInit{
+  competitionService = inject(CompetitionService);
+  router = inject(Router);
+
+
   JudgeConst = JudgeConstellation;
   JudgeConstVals = Object.values(JudgeConstellation);
 
-  dateTime = DateTime;
+  
   ngOnInit(): void {
     this.competitionService.getCompetitions().pipe(
       catchError((err) => {
@@ -33,7 +39,7 @@ export class CreateCompetitionComponent implements OnInit{
     });
     
   }
-  competitionService = inject(CompetitionService);
+  
 
   competitions: Array<Competition> = [];
 
@@ -103,6 +109,10 @@ export class CreateCompetitionComponent implements OnInit{
           this.competitions = this.competitions.filter((entry) => entry != comp);
         });
     }
+  }
+
+  startComp(comp: Competition) {
+    routes
   }
 
   saveComp() {
