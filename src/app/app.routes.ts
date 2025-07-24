@@ -16,5 +16,13 @@ export const routes: Routes = [
         loadComponent: () => {
             return import('./components/create-competition/create-competition.component').then((m) => m.CreateCompetitionComponent);
         }
+    },
+    {
+        path: 'execute-competition',
+        pathMatch: 'full',
+        canMatch: [createCompetitionGuard],
+        loadComponent: () => {
+            return import('./components/execute-competition/execute-competition.component').then((m) => m.ExecuteCompetitionComponent);
+        }
     }
 ];
