@@ -1,6 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { LoginService } from '../../services/login.service';
 import { Router, RouterLink, RouterModule } from '@angular/router';
+import { SaveActiveCompService } from '../../services/save-active-comp.service';
 
 @Component({
   selector: 'app-header',
@@ -11,6 +12,8 @@ import { Router, RouterLink, RouterModule } from '@angular/router';
 export class HeaderComponent {
   loginService = inject(LoginService);
   router = inject(Router);
+  activeCompService = inject(SaveActiveCompService);
+
   logout() {
     localStorage.setItem('token', '');
     this.loginService.currentUserSignal.set(null);

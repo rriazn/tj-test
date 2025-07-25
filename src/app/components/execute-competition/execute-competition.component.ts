@@ -24,6 +24,7 @@ export class ExecuteCompetitionComponent implements OnInit {
       })
     ).subscribe((res) => {
       this.activeComp = res;
+      this.activeCompService.activeComp = res;
     });
     
   }

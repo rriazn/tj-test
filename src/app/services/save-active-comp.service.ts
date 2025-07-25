@@ -9,6 +9,8 @@ import { Observable } from 'rxjs';
 export class SaveActiveCompService {
   http = inject(HttpClient);
 
+  activeComp: Competition | null = null;
+
   saveActiveComp(comp: Competition) {
     return this.http.post("http://localhost:3000/set-active-comp", {id: comp.id}, { responseType: 'text' });
   }
