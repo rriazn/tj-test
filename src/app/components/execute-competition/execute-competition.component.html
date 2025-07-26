@@ -1,6 +1,24 @@
-<p>@if(activeComp == null) {
-        loading...
-    } @else {
-        {{activeComp.name}}
-    }
-</p>
+<div class="execute-comp-outer">
+@if(activeComp == null) {
+    <h1>loading...</h1>
+} @else {
+    <h1>{{activeComp.name}}</h1>
+    <div class="execute-comp-inner">
+        <h4>Groups:</h4>
+        <ul class="groups">
+            
+            @for(group of activeComp.groups; track $index) {
+                <li>
+                    {{group.title}}
+                    <div class="images">
+                        <img src="./assets/edit.png">
+                        <img src="./assets/start.webp">
+                        <img src="./assets/trash.png">
+                    </div>                    
+                </li>
+                
+            }
+        </ul>
+    </div>
+}
+</div>
