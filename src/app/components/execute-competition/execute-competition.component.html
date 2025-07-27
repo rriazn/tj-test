@@ -9,12 +9,24 @@
             
             @for(group of activeComp.groups; track $index) {
                 <li>
-                    {{group.title}}
-                    <div class="images">
-                        <img src="./assets/edit.png">
-                        <img src="./assets/start.webp">
-                        <img src="./assets/trash.png">
-                    </div>                    
+                    <div class="group-title">
+                        {{group.title}}
+                        <div class="images">
+                            <img src="./assets/edit.png" (click)="editGroup(group)">
+                            <img src="./assets/start.webp">
+                        </div>
+                    </div>
+                    @if(editedGroup?.title == group.title) {
+                        <ul class="edit-group">
+                            @for (part of editedGroup?.participants; track $index) {
+                                <li>
+                                    {{part.lastName}}, {{part.firstName}} {{getBirthYear(part)}}
+                                    <img src="./assets/trash.png" (click)="removePart(part)"/>
+                                </li>
+                            }
+                            <button (click)="saveGroup(group)">Save</button>
+                        </ul>
+                    }                    
                 </li>
                 
             }
