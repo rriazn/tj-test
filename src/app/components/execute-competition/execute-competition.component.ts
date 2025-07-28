@@ -72,8 +72,14 @@ export class ExecuteCompetitionComponent implements OnInit {
     return DateTime.fromISO(part.birthDate).year;
   }
 
-  
-  
-  
-  
+  stopCompetition() {
+    this.activeCompService.stopActiveComp().pipe(
+      catchError((err) => {
+        throw(err);
+      })
+    ).subscribe((res) => {
+      this.activeCompService.activeComp = null;
+      this.router.navigateByUrl('/');
+    })
+  }
 }

@@ -18,4 +18,8 @@ export class SaveActiveCompService {
   getActiveComp(): Observable<Competition> {
     return this.http.get<Competition>("http://localhost:3000/get-active-comp");
   }
+
+  stopActiveComp() {
+    return this.http.get("http://localhost:3000/stop-active-comp", { responseType: 'text' });
+  }
 }
