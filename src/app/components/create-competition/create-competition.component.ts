@@ -30,6 +30,8 @@ export class CreateCompetitionComponent implements OnInit{
   JudgeConst = JudgeConstellation;
   JudgeConstVals = Object.values(JudgeConstellation);
 
+  deleteActiveCompError = false;
+
   
   ngOnInit(): void {
     this.competitionService.getCompetitions().pipe(
@@ -101,6 +103,13 @@ export class CreateCompetitionComponent implements OnInit{
   }
 
   deleteComp(comp: Competition) {
+    if(this.saveActiveCompService.activeComp != null) {
+      if(this.saveActiveCompService.activeComp.id == comp.id) {
+        this.deleteActiveCompError = true;
+        return;
+      }
+    } 
+
     const confirm = window.confirm(`Are you sure you want to delete "${comp.name}"?\nThis action cannot be reversed.`);
     if(confirm) {
       this.competitionService.deleteCompetition(comp).pipe(
@@ -113,12 +122,22 @@ export class CreateCompetitionComponent implements OnInit{
     }
   }
 
-  startComp(comp: Competition) {
-    this.saveActiveCompService.saveActiveComp(comp).pipe(
-      catchError(err => { throw(err) })
-    ).subscribe((res) => {
-      this.router.navigateByUrl('/execute-competition');
-    });
+  startComp(comp: Competition) {  
+    let confirm = true;
+    if(this.saveActiveCompService.activeComp != null) {
+      if(this.saveActiveCompService.activeComp.id != comp.id) {
+        confirm = window.confirm(`Starting this competition will end active competition '${this.saveActiveCompService.activeComp.name}'.\n
+        Do you want to continue?`);
+      }
+    }
+    if(confirm) {
+      this.saveActiveCompService.saveActiveComp(comp).pipe(
+        catchError(err => { throw(err) })
+      ).subscribe((res) => {
+        this.router.navigateByUrl('/execute-competition');
+      });
+    }
+    
   }
 
   saveComp() {

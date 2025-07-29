@@ -1,12 +1,27 @@
-import { inject, Injectable } from '@angular/core';
+import { inject, Injectable, OnInit } from '@angular/core';
 import { Competition } from '../model/competition.type';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { catchError, concat, Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class SaveActiveCompService {
+  constructor() {
+    this.getActiveComp().subscribe({
+    next: (data) => {
+      this.activeComp = data;
+    },
+    error: (error) => {
+        if (error.status === 401) {
+          this.activeComp = null;
+        } else {
+          throw(error);
+        }
+      }
+    });
+    
+  }
   http = inject(HttpClient);
 
   activeComp: Competition | null = null;

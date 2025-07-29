@@ -42,6 +42,11 @@
   .inner .comp + .comp {
     margin-top: 20px;
   }
+
+  .delete-active-comp-error {
+    color: red;
+    font-size: small;
+  }
 }
 
 .big-button {
