@@ -1,10 +1,10 @@
 import { Component, inject, input, OnInit, signal } from '@angular/core';
 import { Competition } from '../../model/competition.type';
-import { SaveActiveCompService } from '../../services/save-active-comp.service';
+import { SaveActiveCompService } from '../../services/active-comp.service';
 import { catchError } from 'rxjs';
 import { Router } from '@angular/router';
 import { Group } from '../../model/group.type';
-import { CompetitionService } from '../../services/competition.service';
+import { CompetitionService } from '../../services/save-competition.service';
 import { DateTime } from 'luxon';
 import { Participant } from '../../model/participant.type';
 import { E, G } from '@angular/cdk/keycodes';
@@ -80,6 +80,16 @@ export class ExecuteCompetitionComponent implements OnInit {
     ).subscribe((res) => {
       this.activeCompService.activeComp = null;
       this.router.navigateByUrl('/');
+    })
+  }
+
+  startGroup(group: Group) {
+    this.activeCompService.saveActiveGroup(group).pipe(
+      catchError((err) => {
+        throw(err);
+      })
+    ).subscribe((res) => {
+      this.router.navigateByUrl('execute-group-admin');
     })
   }
 }

@@ -1,5 +1,5 @@
 import { Component, ElementRef, inject, OnInit, signal, ViewChild } from '@angular/core';
-import { CompetitionService } from '../../services/competition.service';
+import { CompetitionService } from '../../services/save-competition.service';
 import { CompetitionComponent } from './competition/competition.component';
 import { Competition } from '../../model/competition.type';
 import { JudgeConstellation } from '../../enums/judge-constellation';
@@ -13,7 +13,7 @@ import {CdkDragDrop, DragDropModule, moveItemInArray, transferArrayItem} from '@
 import { catchError } from 'rxjs';
 import { routes } from '../../app.routes';
 import { Router } from '@angular/router';
-import { SaveActiveCompService } from '../../services/save-active-comp.service';
+import { SaveActiveCompService } from '../../services/active-comp.service';
 
 @Component({
   selector: 'app-create-competition',

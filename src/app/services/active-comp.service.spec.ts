@@ -1,6 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 
-import { SaveActiveCompService } from './save-active-comp.service';
+import { SaveActiveCompService } from './active-comp.service';
 
 describe('SaveActiveCompService', () => {
   let service: SaveActiveCompService;

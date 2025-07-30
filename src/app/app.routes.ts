@@ -24,5 +24,13 @@ export const routes: Routes = [
         loadComponent: () => {
             return import('./components/execute-competition/execute-competition.component').then((m) => m.ExecuteCompetitionComponent);
         }
+    },
+    {
+        path: 'execute-group-admin',
+        pathMatch: 'full',
+        canMatch: [createCompetitionGuard],
+        loadComponent: () => {
+            return import('./components/admin-active-group/admin-active-group.component').then((m) => m.AdminActiveGroupComponent);
+        }
     }
 ];

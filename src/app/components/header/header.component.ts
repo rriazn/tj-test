@@ -1,7 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { LoginService } from '../../services/login.service';
 import { Router, RouterLink, RouterModule } from '@angular/router';
-import { SaveActiveCompService } from '../../services/save-active-comp.service';
+import { SaveActiveCompService } from '../../services/active-comp.service';
 
 @Component({
   selector: 'app-header',

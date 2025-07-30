@@ -13,7 +13,7 @@
                         {{group.title}}
                         <div class="images">
                             <img src="./assets/edit.png" (click)="editGroup(group)">
-                            <img src="./assets/start.webp">
+                            <img src="./assets/start.webp" (click)="startGroup(group)">
                         </div>
                     </div>
                     @if(editedGroup?.title == group.title) {

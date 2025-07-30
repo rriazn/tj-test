@@ -1,6 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 
-import { CompetitionService } from './competition.service';
+import { CompetitionService } from './save-competition.service';
 
 describe('CompetitionService', () => {
   let service: CompetitionService;

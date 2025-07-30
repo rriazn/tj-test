@@ -2,6 +2,7 @@ import { inject, Injectable, OnInit } from '@angular/core';
 import { Competition } from '../model/competition.type';
 import { HttpClient } from '@angular/common/http';
 import { catchError, concat, Observable } from 'rxjs';
+import { Group } from '../model/group.type';
 
 @Injectable({
   providedIn: 'root'
@@ -36,5 +37,14 @@ export class SaveActiveCompService {
 
   stopActiveComp() {
     return this.http.get("http://localhost:3000/stop-active-comp", { responseType: 'text' });
+  }
+
+
+  saveActiveGroup(group: Group) {
+    return this.http.post("http://localhost:3000/set-active-group", {group: group}, { responseType: 'text' });
+  }
+
+  getActiveGroup() {
+    return this.http.get<Group>("http://localhost:3000/get-active-group"); 
   }
 }
