@@ -13,7 +13,7 @@ import {CdkDragDrop, DragDropModule, moveItemInArray, transferArrayItem} from '@
 import { catchError } from 'rxjs';
 import { routes } from '../../app.routes';
 import { Router } from '@angular/router';
-import { SaveActiveCompService } from '../../services/active-comp.service';
+import { ActiveCompService } from '../../services/active-comp.service';
 
 @Component({
   selector: 'app-create-competition',
@@ -24,7 +24,7 @@ import { SaveActiveCompService } from '../../services/active-comp.service';
 export class CreateCompetitionComponent implements OnInit{
   competitionService = inject(CompetitionService);
   router = inject(Router);
-  saveActiveCompService = inject(SaveActiveCompService);
+  saveActiveCompService = inject(ActiveCompService);
 
 
   JudgeConst = JudgeConstellation;
@@ -126,8 +126,10 @@ export class CreateCompetitionComponent implements OnInit{
     let confirm = true;
     if(this.saveActiveCompService.activeComp != null) {
       if(this.saveActiveCompService.activeComp.id != comp.id) {
-        confirm = window.confirm(`Starting this competition will end active competition '${this.saveActiveCompService.activeComp.name}'.\n
+        confirm = window.confirm(`Starting this competition will end active competition '${this.saveActiveCompService.activeComp.name}' and any unsaved group progress will be lost.
         Do you want to continue?`);
+      } else {
+        this.router.navigateByUrl('/execute-competition');
       }
     }
     if(confirm) {

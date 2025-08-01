@@ -1,13 +1,13 @@
 import { TestBed } from '@angular/core/testing';
 
-import { SaveActiveCompService } from './active-comp.service';
+import { ActiveCompService } from './active-comp.service';
 
 describe('SaveActiveCompService', () => {
-  let service: SaveActiveCompService;
+  let service: ActiveCompService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    service = TestBed.inject(SaveActiveCompService);
+    service = TestBed.inject(ActiveCompService);
   });
 
   it('should be created', () => {

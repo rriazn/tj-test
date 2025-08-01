@@ -7,13 +7,13 @@ import { Group } from '../model/group.type';
 @Injectable({
   providedIn: 'root'
 })
-export class SaveActiveCompService {
+export class ActiveCompService {
   constructor() {
     this.getActiveComp().subscribe({
-    next: (data) => {
-      this.activeComp = data;
-    },
-    error: (error) => {
+      next: (data) => {
+        this.activeComp = data;
+      },
+      error: (error) => {
         if (error.status === 401) {
           this.activeComp = null;
         } else {
@@ -21,11 +21,27 @@ export class SaveActiveCompService {
         }
       }
     });
+
+    this.getActiveGroup().subscribe({
+      next: (data) => {
+        
+        this.activeGroup = data;
+      },
+      error: (error) => {
+        if (error.status === 401) {
+          this.activeGroup = null;
+        } else {
+          throw(error);
+        }
+      }  
+    })
     
   }
   http = inject(HttpClient);
 
   activeComp: Competition | null = null;
+
+  activeGroup: Group | null = null;
 
   saveActiveComp(comp: Competition) {
     return this.http.post("http://localhost:3000/set-active-comp", {id: comp.id}, { responseType: 'text' });
@@ -44,7 +60,7 @@ export class SaveActiveCompService {
     return this.http.post("http://localhost:3000/set-active-group", {group: group}, { responseType: 'text' });
   }
 
-  getActiveGroup() {
+  getActiveGroup(): Observable<Group> {
     return this.http.get<Group>("http://localhost:3000/get-active-group"); 
   }
 }

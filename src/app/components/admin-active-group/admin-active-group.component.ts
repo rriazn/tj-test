@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
+import { ActiveCompService } from '../../services/active-comp.service';
 
 @Component({
   selector: 'app-admin-active-group',
@@ -7,5 +8,5 @@ import { Component } from '@angular/core';
   styleUrl: './admin-active-group.component.scss'
 })
 export class AdminActiveGroupComponent {
-
+  activeCompService = inject(ActiveCompService);
 }
