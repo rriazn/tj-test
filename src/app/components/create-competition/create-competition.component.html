@@ -14,9 +14,6 @@
             </div>
         }
     </div>
-    @if(deleteActiveCompError) {
-        <div class="delete-active-comp-error">Cannot delete currently active competition!</div>
-    }
     <button class="big-button" (click)="createNewComp()">New Competition</button>
 </div>
 @if(createOrEdit()) {

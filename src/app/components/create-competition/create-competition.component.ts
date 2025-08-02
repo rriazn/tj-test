@@ -14,6 +14,8 @@ import { catchError } from 'rxjs';
 import { routes } from '../../app.routes';
 import { Router } from '@angular/router';
 import { ActiveCompService } from '../../services/active-comp.service';
+import { MatDialog } from '@angular/material/dialog';
+import { ErrorService } from '../../services/error.service';
 
 @Component({
   selector: 'app-create-competition',
@@ -25,12 +27,12 @@ export class CreateCompetitionComponent implements OnInit{
   competitionService = inject(CompetitionService);
   router = inject(Router);
   saveActiveCompService = inject(ActiveCompService);
-
+  errorService = inject(ErrorService);
 
   JudgeConst = JudgeConstellation;
   JudgeConstVals = Object.values(JudgeConstellation);
 
-  deleteActiveCompError = false;
+  
 
   
   ngOnInit(): void {
@@ -105,7 +107,7 @@ export class CreateCompetitionComponent implements OnInit{
   deleteComp(comp: Competition) {
     if(this.saveActiveCompService.activeComp != null) {
       if(this.saveActiveCompService.activeComp.id == comp.id) {
-        this.deleteActiveCompError = true;
+        this.errorService.showErrorMessage("Cannot delete active competition");
         return;
       }
     } 

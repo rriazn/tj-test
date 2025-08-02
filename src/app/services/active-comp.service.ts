@@ -1,7 +1,7 @@
 import { inject, Injectable, OnInit } from '@angular/core';
 import { Competition } from '../model/competition.type';
 import { HttpClient } from '@angular/common/http';
-import { catchError, concat, Observable } from 'rxjs';
+import { Observable } from 'rxjs';
 import { Group } from '../model/group.type';
 
 @Injectable({

@@ -8,6 +8,9 @@ import { CompetitionService } from '../../services/save-competition.service';
 import { DateTime } from 'luxon';
 import { Participant } from '../../model/participant.type';
 import { E, G } from '@angular/cdk/keycodes';
+import { MatDialog } from '@angular/material/dialog';
+import { ErrorDialogComponent } from '../error-dialog/error-dialog.component';
+import { ErrorService } from '../../services/error.service';
 
 @Component({
   selector: 'app-execute-competition',
@@ -16,25 +19,22 @@ import { E, G } from '@angular/cdk/keycodes';
   styleUrl: './execute-competition.component.scss'
 })
 export class ExecuteCompetitionComponent implements OnInit {
-  activeCompService = inject(ActiveCompService);
-  router = inject(Router);
-  competitionService = inject(CompetitionService);
-
-  activeComp!: Competition;
-
-  editedGroup: Group | null = null;
-
   ngOnInit(): void {
     this.activeCompService.getActiveComp().pipe(
       catchError((err) => {
-        this.router.navigateByUrl('/');
         throw(err);
       })
-    ).subscribe((res) => {
-      this.activeComp = res;
-      this.activeCompService.activeComp = res;
-    });
+    ).subscribe((data) => this.activeCompService.activeComp = data);
   }
+  activeCompService = inject(ActiveCompService);
+  router = inject(Router);
+  competitionService = inject(CompetitionService);
+  errorService = inject(ErrorService);
+
+  
+  editedGroup: Group | null = null;
+
+
   
   editGroup(group: Group) {
     if(null == this.editedGroup) {
@@ -55,17 +55,19 @@ export class ExecuteCompetitionComponent implements OnInit {
   }
 
   saveGroup(group: Group) {
-    this.activeComp.groups = this.activeComp.groups.map((el) => {
-      if(el == group && this.editedGroup != null) {
-        return this.editedGroup;
-      } else {
-        return el;
-      }
-    });
-    this.competitionService.saveCompetition(this.activeComp).pipe(
-        catchError((error) => {
-            throw(error);
-        })).subscribe((res) => this.editedGroup = null);
+    if(this.activeCompService.activeComp != null) {
+      this.activeCompService.activeComp.groups = this.activeCompService.activeComp.groups.map((el) => {
+        if(el == group && this.editedGroup != null) {
+          return this.editedGroup;
+        } else {
+          return el;
+        }
+      });
+      this.competitionService.saveCompetition(this.activeCompService.activeComp).pipe(
+          catchError((error) => {
+              throw(error);
+          })).subscribe((res) => this.editedGroup = null);
+    }
   }
 
   getBirthYear(part: Participant) {
@@ -84,9 +86,14 @@ export class ExecuteCompetitionComponent implements OnInit {
   }
 
   startGroup(group: Group) {
+    if(group.participants.length == 0) {
+      this.errorService.showErrorMessage("Cannot start group with no participants");
+      return;
+    }
+
     if(this.activeCompService.activeGroup != null) {
       if(group.title != this.activeCompService.activeGroup.title) {
-
+        this.errorService.showErrorMessage("Cannot start group while other group is running");
       } else {
         this.router.navigateByUrl('/execute-group-admin');
       }
