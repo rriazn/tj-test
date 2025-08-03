@@ -17,14 +17,14 @@ export class CompetitionService {
   part = [];
 
   getCompetitions() {
-    return this.http.get<Array<Competition>>("http://localhost:3000/get-competitions");
+    return this.http.get<Array<Competition>>("http://localhost:3000/competitions/get-competitions");
   }
 
   saveCompetition(comp: Competition) {
-    return this.http.post("http://localhost:3000/save-competition", {competition: comp}, { responseType: 'text' });
+    return this.http.post("http://localhost:3000/competitions/save-competition", {competition: comp}, { responseType: 'text' });
   }
 
   deleteCompetition(comp: Competition) {
-    return this.http.post("http://localhost:3000/delete-competition", {id: comp.id}, { responseType: 'text' });
+    return this.http.post("http://localhost:3000/competitions/delete-competition", {id: comp.id}, { responseType: 'text' });
   }
 }

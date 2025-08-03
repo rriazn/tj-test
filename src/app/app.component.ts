@@ -15,7 +15,7 @@ export class AppComponent implements OnInit {
   http = inject(HttpClient);
   loginService = inject(LoginService);
   ngOnInit(): void {
-    this.http.get<{user: UserInterface}>('http://localhost:3000/auth').subscribe({
+    this.http.get<{user: UserInterface}>('http://localhost:3000/users/auth').subscribe({
       next: (resp) => {
         this.loginService.currentUserSignal.set(resp.user);
       },

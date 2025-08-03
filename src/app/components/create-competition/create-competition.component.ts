@@ -5,16 +5,13 @@ import { Competition } from '../../model/competition.type';
 import { JudgeConstellation } from '../../enums/judge-constellation';
 import { DateTime } from 'luxon';
 import { FormsModule } from '@angular/forms';
-import { NgIf } from '@angular/common';
 import { UploadComponent } from './upload/upload.component';
 import { Group } from '../../model/group.type';
 import { Participant } from '../../model/participant.type';
 import {CdkDragDrop, DragDropModule, moveItemInArray, transferArrayItem} from '@angular/cdk/drag-drop';
 import { catchError } from 'rxjs';
-import { routes } from '../../app.routes';
 import { Router } from '@angular/router';
 import { ActiveCompService } from '../../services/active-comp.service';
-import { MatDialog } from '@angular/material/dialog';
 import { ErrorService } from '../../services/error.service';
 
 @Component({

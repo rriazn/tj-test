@@ -44,23 +44,23 @@ export class ActiveCompService {
   activeGroup: Group | null = null;
 
   saveActiveComp(comp: Competition) {
-    return this.http.post("http://localhost:3000/set-active-comp", {id: comp.id}, { responseType: 'text' });
+    return this.http.post("http://localhost:3000/activeComps/set-active-comp", {id: comp.id}, { responseType: 'text' });
   }
 
   getActiveComp(): Observable<Competition> {
-    return this.http.get<Competition>("http://localhost:3000/get-active-comp");
+    return this.http.get<Competition>("http://localhost:3000/activeComps/get-active-comp");
   }
 
   stopActiveComp() {
-    return this.http.get("http://localhost:3000/stop-active-comp", { responseType: 'text' });
+    return this.http.get("http://localhost:3000/activeComps/stop-active-comp", { responseType: 'text' });
   }
 
 
   saveActiveGroup(group: Group) {
-    return this.http.post("http://localhost:3000/set-active-group", {group: group}, { responseType: 'text' });
+    return this.http.post("http://localhost:3000/activeComps/set-active-group", {group: group}, { responseType: 'text' });
   }
 
   getActiveGroup(): Observable<Group> {
-    return this.http.get<Group>("http://localhost:3000/get-active-group"); 
+    return this.http.get<Group>("http://localhost:3000/activeComps/get-active-group"); 
   }
 }

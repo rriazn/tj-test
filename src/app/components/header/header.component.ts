@@ -2,6 +2,7 @@ import { Component, inject } from '@angular/core';
 import { LoginService } from '../../services/login.service';
 import { Router, RouterLink, RouterModule } from '@angular/router';
 import { ActiveCompService } from '../../services/active-comp.service';
+import { catchError } from 'rxjs';
 
 @Component({
   selector: 'app-header',
@@ -15,8 +16,14 @@ export class HeaderComponent {
   activeCompService = inject(ActiveCompService);
 
   logout() {
-    localStorage.setItem('token', '');
-    this.loginService.currentUserSignal.set(null);
-    this.router.navigateByUrl('/');
+    this.loginService.logout().pipe(
+      catchError((err) => {
+        throw(err);
+      })
+    ).subscribe((res) => {
+      localStorage.setItem('token', '');
+      this.loginService.currentUserSignal.set(null);
+      this.router.navigateByUrl('/');
+    })
   }
 }

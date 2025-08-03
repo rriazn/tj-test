@@ -14,11 +14,15 @@ export class LoginService {
   async verifyAdmin(): Promise<boolean> {
     try {
       const response = await firstValueFrom(
-        this.http.get('http://localhost:3000/admin', { responseType: 'text' })
+        this.http.get('http://localhost:3000/users/admin', { responseType: 'text' })
       );
       return true;
     } catch (error) {
       return false;
     }
+  }
+
+  logout() {
+    return this.http.get('http://localhost:3000/users/logout', { responseType: 'text' });
   }
 }
