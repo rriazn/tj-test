@@ -1,1 +1,8 @@
-<p>{{activeCompService.activeGroup?.title}}</p>
+<div class="admin-active-group-outer">
+    <h1>{{activeCompService.activeGroup?.title}}</h1>
+
+    @if(activeCompService.activeGroup != null && activeCompService.activeParticipantID != -1) {
+        <h2>{{activePart?.firstName}} {{activePart?.lastName}}</h2>
+    }
+    
+</div>

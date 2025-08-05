@@ -101,9 +101,11 @@ export class ExecuteCompetitionComponent implements OnInit {
       this.activeCompService.saveActiveGroup(group).pipe(
         catchError((err) => {
           throw(err);
+          
         })
       ).subscribe((res) => {
         this.activeCompService.activeGroup = group;
+        this.activeCompService.activeParticipantID = 0;
         this.router.navigateByUrl('/execute-group-admin');
       })
     }
