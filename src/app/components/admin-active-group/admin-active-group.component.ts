@@ -1,6 +1,9 @@
 import { Component, computed, inject, OnInit } from '@angular/core';
 import { ActiveCompService } from '../../services/active-comp.service';
 import { Participant } from '../../model/participant.type';
+import { catchError } from 'rxjs';
+import { ErrorService } from '../../services/error.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-admin-active-group',
@@ -10,6 +13,35 @@ import { Participant } from '../../model/participant.type';
 })
 export class AdminActiveGroupComponent {
   activeCompService = inject(ActiveCompService);
+  errorService = inject(ErrorService);
+  router = inject(Router);
 
   activePart = this.activeCompService.activeGroup?.participants[this.activeCompService.activeParticipantID];
+
+  nextParticipant() {
+    this.activeCompService.nextParticipant().pipe(
+      catchError((err) => {
+        this.errorService.showErrorMessage("Error setting next participant");
+        this.router.navigateByUrl('/');
+        throw(err);
+      })
+    ).subscribe((data) => {
+      this.activeCompService.activeParticipantID++;
+      this.activePart = this.activeCompService.activeGroup?.participants[this.activeCompService.activeParticipantID];
+    })
+  }
+
+  endGroup() {
+    this.activeCompService.stopActiveGroup().pipe(
+      catchError((err) => {
+        this.errorService.showErrorMessage("Error stopping competition");
+        throw(err);
+      })
+    ).subscribe((data) => {
+      this.router.navigateByUrl('/execute-competition');
+      this.activeCompService.activeGroup = null;
+      this.activeCompService.activeParticipantID = -1;
+    })
+  }
+  
 }

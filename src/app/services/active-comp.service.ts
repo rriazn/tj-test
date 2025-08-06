@@ -86,4 +86,12 @@ export class ActiveCompService {
   getActivePartID(): Observable<number> {
     return this.http.get<number>("http://localhost:3000/activeComps/get-active-part-id");
   }
+
+  nextParticipant() {
+    return this.http.get("http://localhost:3000/activeComps/next-part", { responseType: 'text' });
+  }
+
+  stopActiveGroup() {
+    return this.http.get("http://localhost:3000/activeComps/stop-active-group", { responseType: 'text' });
+  }
 }
