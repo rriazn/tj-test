@@ -59,6 +59,7 @@ export class ActiveCompService {
 
   activeGroup: Group | null = null;
 
+  // -1: no active Participant, only possible if activeGroup == null
   activeParticipantID: number = -1;
 
   saveActiveComp(comp: Competition) {

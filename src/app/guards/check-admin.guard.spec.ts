@@ -1,11 +1,11 @@
 import { TestBed } from '@angular/core/testing';
 import { CanMatchFn } from '@angular/router';
 
-import { createCompetitionGuard } from './create-competition.guard';
+import { checkAdminGuard } from './check-admin.guard';
 
 describe('createCompetitionGuard', () => {
   const executeGuard: CanMatchFn = (...guardParameters) => 
-      TestBed.runInInjectionContext(() => createCompetitionGuard(...guardParameters));
+      TestBed.runInInjectionContext(() => checkAdminGuard(...guardParameters));
 
   beforeEach(() => {
     TestBed.configureTestingModule({});

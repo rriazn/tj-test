@@ -1,5 +1,5 @@
 import { Routes } from '@angular/router';
-import { createCompetitionGuard } from './guards/create-competition.guard';
+import { checkAdminGuard } from './guards/check-admin.guard';
 
 export const routes: Routes = [
     {
@@ -12,7 +12,7 @@ export const routes: Routes = [
     {
         path: 'manage-competitions',
         pathMatch: 'full',
-        canMatch: [createCompetitionGuard],
+        canMatch: [checkAdminGuard],
         loadComponent: () => {
             return import('./components/create-competition/create-competition.component').then((m) => m.CreateCompetitionComponent);
         }
@@ -20,7 +20,7 @@ export const routes: Routes = [
     {
         path: 'execute-competition',
         pathMatch: 'full',
-        canMatch: [createCompetitionGuard],
+        canMatch: [checkAdminGuard],
         loadComponent: () => {
             return import('./components/execute-competition/execute-competition.component').then((m) => m.ExecuteCompetitionComponent);
         }
@@ -28,7 +28,15 @@ export const routes: Routes = [
     {
         path: 'execute-group-admin',
         pathMatch: 'full',
-        canMatch: [createCompetitionGuard],
+        canMatch: [checkAdminGuard],
+        loadComponent: () => {
+            return import('./components/admin-active-group/admin-active-group.component').then((m) => m.AdminActiveGroupComponent);
+        }
+    },
+    {
+        path: 'manage-judges',
+        pathMatch: 'full',
+        canMatch: [checkAdminGuard],
         loadComponent: () => {
             return import('./components/admin-active-group/admin-active-group.component').then((m) => m.AdminActiveGroupComponent);
         }
