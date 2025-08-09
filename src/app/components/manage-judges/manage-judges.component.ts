@@ -1,4 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
+import { Judge } from '../../model/judge.type';
+import { JudgeFunction } from '../../enums/judge-functions';
 
 @Component({
   selector: 'app-manage-judges',
@@ -8,4 +10,21 @@ import { Component } from '@angular/core';
 })
 export class ManageJudgesComponent {
 
+
+  judges = signal<Judge[]>([]);
+  newJudge = signal<Judge>(this.getStandartJudge());
+
+
+
+  getStandartJudge(): Judge {
+    return {
+      name: '',
+      function: JudgeFunction.DIFFICULTY,
+      id: 0
+    }
+  }
+
+  addJudge() {
+
+  }
 }
