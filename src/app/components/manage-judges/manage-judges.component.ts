@@ -1,15 +1,17 @@
 import { Component, signal } from '@angular/core';
 import { Judge } from '../../model/judge.type';
 import { JudgeFunction } from '../../enums/judge-functions';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-manage-judges',
-  imports: [],
+  imports: [FormsModule],
   templateUrl: './manage-judges.component.html',
   styleUrl: './manage-judges.component.scss'
 })
 export class ManageJudgesComponent {
-
+  JudgeFunc = JudgeFunction;
+  JudgeFuncVals = Object.values(JudgeFunction);
 
   judges = signal<Judge[]>([]);
   newJudge = signal<Judge>(this.getStandartJudge());

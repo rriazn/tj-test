@@ -1,3 +1,21 @@
 <div class="manage-judges-outer">
     <h1>Active Judges</h1>
+    <ul class="judge-list">
+        @for(judge of judges(); track $index) {
+            <li>{{judge.function}}: {{judge.name}}</li>
+        }
+    </ul>
+    <button (click)="addJudge()">New Judge</button>
+
+    @if(editMode()) {
+        <div class="edit-part">
+            <input type="text" placeholder="name" [(ngModel)]="newJudge().name">
+            <ul>
+                @for(member of JudgeFuncVals; track $index) {
+                    <li><label><input type="radio" name="judge-function" [(ngModel)]="newJudge().function" [value]="member">{{ member }}</label></li>
+                }
+            </ul>
+            <button (click)="saveJudge()">Save</button>
+        </div>
+    }
 </div>

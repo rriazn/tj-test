@@ -38,7 +38,7 @@ export const routes: Routes = [
         pathMatch: 'full',
         canMatch: [checkAdminGuard],
         loadComponent: () => {
-            return import('./components/admin-active-group/admin-active-group.component').then((m) => m.AdminActiveGroupComponent);
+            return import('./components/manage-judges/manage-judges.component').then((m) => m.ManageJudgesComponent);
         }
     }
 ];
