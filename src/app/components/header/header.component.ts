@@ -18,6 +18,9 @@ export class HeaderComponent {
   logout() {
     this.loginService.logout().pipe(
       catchError((err) => {
+        localStorage.setItem('token', '');
+        this.loginService.currentUserSignal.set(null);
+        this.router.navigateByUrl('/');
         throw(err);
       })
     ).subscribe((res) => {

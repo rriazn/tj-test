@@ -1,7 +1,11 @@
-import { Component, signal } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { Judge } from '../../model/judge.type';
 import { JudgeFunction } from '../../enums/judge-functions';
 import { FormsModule } from '@angular/forms';
+import { HttpClient } from '@angular/common/http';
+import { HashService } from '../../services/hash.service';
+import { catchError } from 'rxjs';
+import { ErrorService } from '../../services/error.service';
 
 @Component({
   selector: 'app-manage-judges',
@@ -13,9 +17,15 @@ export class ManageJudgesComponent {
   JudgeFunc = JudgeFunction;
   JudgeFuncVals = Object.values(JudgeFunction);
 
+  http = inject(HttpClient);
+  hashService = inject(HashService);
+  errorService = inject(ErrorService);
+
   judges = signal<Judge[]>([]);
   newJudge = signal<Judge>(this.getStandartJudge());
+  newPw = signal<string>('');
   editMode = signal<boolean>(false);
+  
 
 
   getStandartJudge(): Judge {
@@ -55,8 +65,20 @@ export class ManageJudgesComponent {
       } else {
         this.newJudge().id = this.findSmallestID();
       }
-      // TODO: save on backend
-      this.judges().push(this.newJudge()); 
+      this.http.post('http://localhost:3000/users/add-user', {
+        user: {
+          username: this.newJudge().name,
+          pwHash: this.hashService.hashStringSHA256(this.newPw())
+        }
+      }, {responseType: 'text'}).pipe(
+        catchError((err) => {
+          this.errorService.showErrorMessage('error saving user ' + err);
+          throw(err);
+        })
+      ).subscribe((data) => {
+        this.judges().push(this.newJudge()); 
+        this.editMode.set(false);
+      })
     }
   }
 
