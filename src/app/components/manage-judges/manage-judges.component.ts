@@ -6,6 +6,7 @@ import { HttpClient } from '@angular/common/http';
 import { HashService } from '../../services/hash.service';
 import { catchError } from 'rxjs';
 import { ErrorService } from '../../services/error.service';
+import { JudgeService } from '../../services/judge.service';
 
 @Component({
   selector: 'app-manage-judges',
@@ -17,7 +18,7 @@ export class ManageJudgesComponent {
   JudgeFunc = JudgeFunction;
   JudgeFuncVals = Object.values(JudgeFunction);
 
-  http = inject(HttpClient);
+  judgeService = inject(JudgeService);
   hashService = inject(HashService);
   errorService = inject(ErrorService);
 
@@ -65,12 +66,7 @@ export class ManageJudgesComponent {
       } else {
         this.newJudge().id = this.findSmallestID();
       }
-      this.http.post('http://localhost:3000/users/add-user', {
-        user: {
-          username: this.newJudge().name,
-          pwHash: this.hashService.hashStringSHA256(this.newPw())
-        }
-      }, {responseType: 'text'}).pipe(
+      this.judgeService.saveJudge(this.newJudge(), this.newPw()).pipe(
         catchError((err) => {
           this.errorService.showErrorMessage('error saving user ' + err);
           throw(err);
@@ -99,5 +95,9 @@ export class ManageJudgesComponent {
       breakLoop = true;
     }
     return lowestID;
+  }
+
+  async hashPw(pw: string) {
+    this.newPw.set(await this.hashService.hashStringSHA256(pw));
   }
 }

@@ -8,7 +8,7 @@ import { FormsModule } from '@angular/forms';
 import { UploadComponent } from './upload/upload.component';
 import { Group } from '../../model/group.type';
 import { Participant } from '../../model/participant.type';
-import {CdkDragDrop, DragDropModule, moveItemInArray, transferArrayItem} from '@angular/cdk/drag-drop';
+import { CdkDragDrop, DragDropModule, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 import { catchError } from 'rxjs';
 import { Router } from '@angular/router';
 import { ActiveCompService } from '../../services/active-comp.service';
@@ -142,7 +142,6 @@ export class CreateCompetitionComponent implements OnInit{
   }
 
   saveComp() {
-    
     if(this.newDate?.slice()) {
       const newComp: Competition = {
         name: this.newCompName,
@@ -176,7 +175,6 @@ export class CreateCompetitionComponent implements OnInit{
 
   getParticipants(parts: Participant[]) {
     this.newUnassignedParticipants = this.newUnassignedParticipants.concat(parts);
-
   }
 
   onEnter(event: KeyboardEvent) {
