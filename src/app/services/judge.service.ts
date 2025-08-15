@@ -9,23 +9,25 @@ import { HashService } from './hash.service';
 })
 export class JudgeService {
   http = inject(HttpClient);
-  hashService = inject(HashService);
   constructor() { }
 
-  saveJudge(judge: Judge) {
-    this.http.post('http://localhost:3000/users/add-user', {
+  saveJudge(judge: Judge, pwHash: string) {
+    return this.http.post('http://localhost:3000/users/add-user', {
             user: {
-              username: this.judge.name,
-              pwHash: this.hashService.hashStringSHA256(this.newPw())
+              username: judge.name,
+              pwHash: pwHash,
+              function: judge.function
             }
-          }, {responseType: 'text'})
+          }, {responseType: 'text'});
   }
 
   deleteJudge(judge: Judge) {
-
+    return this.http.post('http://localhost:3000/users/add-user', {
+        username: judge.name
+      }, {responseType: 'text'});
   }
 
   getJudges(): Observable<Judge[]> {
-
+    return this.http.get<Judge[]>('http://localhost:3000/users/get-users');
   }
 }

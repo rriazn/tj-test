@@ -32,8 +32,7 @@ export class ManageJudgesComponent {
   getStandartJudge(): Judge {
     return {
       name: '',
-      function: JudgeFunction.DIFFICULTY,
-      id: 0
+      function: JudgeFunction.DIFFICULTY
     }
   }
 
@@ -61,10 +60,14 @@ export class ManageJudgesComponent {
 
   saveJudge() {
     if(this.editMode()) {
-      if(this.judges().map((j) => j.id).includes(this.newJudge().id)) {
-        this.judges.set(this.judges().filter(j => j.id != this.newJudge().id));
-      } else {
-        this.newJudge().id = this.findSmallestID();
+      // check if it is replacing an existing judge (boolean so check doesnt have to be done twice)
+      let replace = false;
+      if(this.judges().map((j) => j.name).includes(this.newJudge().name)) {
+        const confirm = window.confirm(`Are you sure you want to overwrite ${this.newJudge.name}?`);
+        if(!confirm) {
+          return;
+        }
+        replace = true;
       }
       this.judgeService.saveJudge(this.newJudge(), this.newPw()).pipe(
         catchError((err) => {
@@ -72,6 +75,9 @@ export class ManageJudgesComponent {
           throw(err);
         })
       ).subscribe((data) => {
+        if(replace) {
+          this.judges.set(this.judges().filter((el) => el.name != this.newJudge().name));
+        }
         this.judges().push(this.newJudge()); 
         this.editMode.set(false);
       })
