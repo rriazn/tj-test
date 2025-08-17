@@ -1,4 +1,4 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, inject, OnInit, signal } from '@angular/core';
 import { Judge } from '../../model/judge.type';
 import { JudgeFunction } from '../../enums/judge-functions';
 import { FormsModule } from '@angular/forms';
@@ -14,7 +14,20 @@ import { JudgeService } from '../../services/judge.service';
   templateUrl: './manage-judges.component.html',
   styleUrl: './manage-judges.component.scss'
 })
-export class ManageJudgesComponent {
+export class ManageJudgesComponent implements OnInit{
+  
+  ngOnInit(): void {
+    this.judgeService.getJudges().subscribe({
+      next: (data) => {
+        this.judges.set(data);
+      },
+      error: (error) => {
+        this.errorService.showErrorMessage('Error getting judges');
+        throw(error);
+      }  
+    });
+  }
+  
   JudgeFunc = JudgeFunction;
   JudgeFuncVals = Object.values(JudgeFunction);
 
@@ -82,25 +95,6 @@ export class ManageJudgesComponent {
         this.editMode.set(false);
       })
     }
-  }
-
-  findSmallestID() {
-    let lowestID = 0;
-    let breakLoop = true;
-    while(true) {
-      for(const judge of this.judges()) {
-        if(lowestID == judge.id && this.newJudge().function == judge.function) {
-          lowestID += 1;
-          breakLoop = false;
-          break;
-        }
-      }
-      if(breakLoop) {
-        break;
-      }
-      breakLoop = true;
-    }
-    return lowestID;
   }
 
   async hashPw(pw: string) {
