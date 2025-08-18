@@ -9,9 +9,13 @@
                 @if(activeCompService.activeComp != null) {
                     <li class="clickable" routerLink="/execute-competition">{{activeCompService.activeComp.name}}</li>
                 } @else {
-                    <li class="clickable" routerLink="manage-judges">judges</li>
+                    @if(loginService.currentUserSignal()?.username == 'admin') {
+                        <li class="clickable" routerLink="manage-judges">judges</li>
+                    }
                 }
-                <li class="clickable" routerLink="/manage-competitions">manage competitions</li>
+                @if(loginService.currentUserSignal()?.username == 'admin') {
+                    <li class="clickable" routerLink="/manage-competitions">manage competitions</li>
+                }
                 <li class="clickable" (click)="logout()">logout</li>
             }
         </ul>
