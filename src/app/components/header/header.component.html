@@ -6,8 +6,8 @@
                 <li class="clickable" routerLink="/login">login</li>
             } @else if(loginService.currentUserSignal()) {
                 <li>{{loginService.currentUserSignal()?.username}}</li>
-                @if(activeCompService.activeComp != null) {
-                    <li class="clickable" routerLink="/execute-competition">{{activeCompService.activeComp.name}}</li>
+                @if(activeCompService.activeComp() != null) {
+                    <li class="clickable" routerLink="/execute-competition">{{activeCompService.activeComp()?.name}}</li>
                 } @else {
                     @if(loginService.currentUserSignal()?.username == 'admin') {
                         <li class="clickable" routerLink="manage-judges">judges</li>

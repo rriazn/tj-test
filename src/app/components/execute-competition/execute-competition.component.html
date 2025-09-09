@@ -1,13 +1,13 @@
 <div class="execute-comp-outer">
-@if(activeCompService.activeComp == null) {
+@if(activeCompService.activeComp() == null) {
     <h1>loading...</h1>
 } @else {
-    <h1>{{activeCompService.activeComp.name}}</h1>
+    <h1>{{activeCompService.activeComp()?.name}}</h1>
     <div class="execute-comp-inner">
         <h4>Groups:</h4>
         <ul class="groups">
             
-            @for(group of activeCompService.activeComp.groups; track $index) {
+            @for(group of activeCompService.activeComp()?.groups; track $index) {
                 <li>
                     <div class="group-title">
                         {{group.title}}
@@ -20,8 +20,8 @@
                         <ul class="edit-group">
                             @for (part of editedGroup?.participants; track $index) {
                                 <li>
-                                    {{part.lastName}}, {{part.firstName}} {{getBirthYear(part)}}
-                                    <img src="./assets/trash.png" (click)="removePart(part)"/>
+                                    {{part[0].lastName}}, {{part[0].firstName}} {{getBirthYear(part[0])}}
+                                    <img src="./assets/trash.png" (click)="removePart(part[0])"/>
                                 </li>
                             }
                             <button (click)="saveGroup(group)">Save</button>

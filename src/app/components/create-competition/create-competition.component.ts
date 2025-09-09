@@ -13,6 +13,7 @@ import { catchError } from 'rxjs';
 import { Router } from '@angular/router';
 import { ActiveCompService } from '../../services/active-comp.service';
 import { ErrorService } from '../../services/error.service';
+import { Score, createEmptyScore } from '../../model/score.type';
 
 @Component({
   selector: 'app-create-competition',
@@ -51,7 +52,7 @@ export class CreateCompetitionComponent implements OnInit{
   newCompName: string = "";
   newDate: string | null = DateTime.local().toISODate();
   newGroups: Array<Group> = [];
-  newUnassignedParticipants: Array<Participant> = [];
+  newUnassignedParticipants: Array<[Participant, Score]> = [];
   newJudgeConstellation = JudgeConstellation.Standart4ExecutionNoTOFNoHD;
   currId: number = 0;
 
@@ -103,7 +104,7 @@ export class CreateCompetitionComponent implements OnInit{
 
   deleteComp(comp: Competition) {
     if(this.saveActiveCompService.activeComp != null) {
-      if(this.saveActiveCompService.activeComp.id == comp.id) {
+      if(this.saveActiveCompService.activeComp()?.id == comp.id) {
         this.errorService.showErrorMessage("Cannot delete active competition");
         return;
       }
@@ -123,9 +124,9 @@ export class CreateCompetitionComponent implements OnInit{
 
   startComp(comp: Competition) {  
     let confirm = true;
-    if(this.saveActiveCompService.activeComp != null) {
-      if(this.saveActiveCompService.activeComp.id != comp.id) {
-        confirm = window.confirm(`Starting this competition will end active competition '${this.saveActiveCompService.activeComp.name}' and any unsaved group progress will be lost.
+    if(this.saveActiveCompService.activeComp() != null) {
+      if(this.saveActiveCompService.activeComp()?.id != comp.id) {
+        confirm = window.confirm(`Starting this competition will end active competition '${this.saveActiveCompService.activeComp()?.name}' and any unsaved group progress will be lost.
         Do you want to continue?`);
       } else {
         this.router.navigateByUrl('/execute-competition');
@@ -174,7 +175,7 @@ export class CreateCompetitionComponent implements OnInit{
   }
 
   getParticipants(parts: Participant[]) {
-    this.newUnassignedParticipants = this.newUnassignedParticipants.concat(parts);
+    this.newUnassignedParticipants = this.newUnassignedParticipants.concat(parts.map((p) => [p, createEmptyScore()]));
   }
 
   onEnter(event: KeyboardEvent) {
@@ -191,7 +192,6 @@ export class CreateCompetitionComponent implements OnInit{
       }];
       this.groupName = "";
     } 
-    
   }
 
   deleteGroup(group: Group) {
@@ -203,13 +203,13 @@ export class CreateCompetitionComponent implements OnInit{
   }
 
   deleteParticipant(part: Participant) {
-    this.newUnassignedParticipants = this.newUnassignedParticipants.filter((e) => e != part);
+    this.newUnassignedParticipants = this.newUnassignedParticipants.filter((e) => e[0] != part);
   }
 
   deleteParticipantFromGroup(part: Participant, group: Group) {
     this.newGroups.map((g) => {
       if(g == group) {
-        g.participants = g.participants.filter((p) => p != part);
+        g.participants = g.participants.filter((p) => p[0] != part);
       }
     })
   }
@@ -219,7 +219,7 @@ export class CreateCompetitionComponent implements OnInit{
   }
 
 
-  drop(event: CdkDragDrop<Participant[]>) {
+  drop(event: CdkDragDrop<[Participant, Score][]>) {
     if (event.previousContainer === event.container) {
       moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
     } else {

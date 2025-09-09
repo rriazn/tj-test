@@ -16,7 +16,8 @@ export class AdminActiveGroupComponent {
   errorService = inject(ErrorService);
   router = inject(Router);
 
-  activePart = this.activeCompService.activeGroup?.participants[this.activeCompService.activeParticipantID];
+  group = this.activeCompService.activeGroup();
+  activePart = this.activeCompService.activeGroup()?.participants[this.activeCompService.activeParticipantID()];
 
   nextParticipant() {
     this.activeCompService.nextParticipant().pipe(
@@ -26,8 +27,8 @@ export class AdminActiveGroupComponent {
         throw(err);
       })
     ).subscribe((data) => {
-      this.activeCompService.activeParticipantID++;
-      this.activePart = this.activeCompService.activeGroup?.participants[this.activeCompService.activeParticipantID];
+      this.activeCompService.activeParticipantID.set(this.activeCompService.activeParticipantID() + 1);
+      this.activePart = this.activeCompService.activeGroup()?.participants[this.activeCompService.activeParticipantID()];
     })
   }
 
@@ -39,8 +40,7 @@ export class AdminActiveGroupComponent {
       })
     ).subscribe((data) => {
       this.router.navigateByUrl('/execute-competition');
-      this.activeCompService.activeGroup = null;
-      this.activeCompService.activeParticipantID = -1;
+      this.activeCompService.activeParticipantID.set(-1);
     })
   }
   

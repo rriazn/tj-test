@@ -1,17 +1,19 @@
 <div class="admin-active-group-outer">
     
+    
 
-    @if(activeCompService.activeGroup != null && activeCompService.activeParticipantID != -1) {
-        <h1>{{activeCompService.activeGroup.title}}</h1>
-        <h2>{{activePart?.firstName}} {{activePart?.lastName}}</h2>
+    @if(group != null && activePart != undefined) {
+        <h1>{{group.title}}</h1>
+        <h2>{{activePart[0].firstName}} {{activePart[0].lastName}}</h2>
 
-        @if(activeCompService.activeParticipantID < activeCompService.activeGroup.participants.length - 1) {
-            <button (click)="nextParticipant()">next</button>
+        <input type="number" placeholder="Strafwert">
+        @if(activeCompService.activeParticipantID() < group.participants.length - 1) {
+            <button (click)="nextParticipant()">nächster Athlet</button>
         } @else {
-            <button (click)="endGroup()">end group</button>
+            <button (click)="endGroup()">Gruppe beenden</button>
         }
     } @else {
-        loading...
+        laden...
     }
     
 </div>

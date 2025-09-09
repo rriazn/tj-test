@@ -18,13 +18,13 @@ import { ErrorService } from '../../services/error.service';
   templateUrl: './execute-competition.component.html',
   styleUrl: './execute-competition.component.scss'
 })
-export class ExecuteCompetitionComponent implements OnInit {
+export class ExecuteCompetitionComponent implements OnInit{
   ngOnInit(): void {
     this.activeCompService.getActiveComp().pipe(
       catchError((err) => {
         throw(err);
       })
-    ).subscribe((data) => this.activeCompService.activeComp = data);
+    ).subscribe((data) => this.activeCompService.activeComp.set(data));
   }
   activeCompService = inject(ActiveCompService);
   router = inject(Router);
@@ -50,20 +50,22 @@ export class ExecuteCompetitionComponent implements OnInit {
   removePart(part: Participant) {
     const confirm = window.confirm(`Do you really want to remove ${part.lastName}, ${part.firstName}?`);
     if(this.editedGroup != null && confirm) {
-      this.editedGroup.participants = this.editedGroup?.participants.filter((p) => p != part);
+      this.editedGroup.participants = this.editedGroup?.participants.filter((p) => p[0] != part);
     }
   }
 
   saveGroup(group: Group) {
-    if(this.activeCompService.activeComp != null) {
-      this.activeCompService.activeComp.groups = this.activeCompService.activeComp.groups.map((el) => {
+    let activeComp = this.activeCompService.activeComp();
+    if(activeComp != null) {
+      activeComp.groups = activeComp.groups.map((el) => {
         if(el == group && this.editedGroup != null) {
           return this.editedGroup;
         } else {
           return el;
         }
       });
-      this.competitionService.saveCompetition(this.activeCompService.activeComp).pipe(
+      this.activeCompService.activeComp.set(activeComp);
+      this.competitionService.saveCompetition(activeComp).pipe(
           catchError((error) => {
               throw(error);
           })).subscribe((res) => this.editedGroup = null);
@@ -80,19 +82,21 @@ export class ExecuteCompetitionComponent implements OnInit {
         throw(err);
       })
     ).subscribe((res) => {
-      this.activeCompService.activeComp = null;
+      this.activeCompService.activeComp.set(null);
       this.router.navigateByUrl('/');
     })
   }
 
   startGroup(group: Group) {
+
+    console.log(this.activeCompService.activeGroupID())
     if(group.participants.length == 0) {
       this.errorService.showErrorMessage("Cannot start group with no participants");
       return;
     }
 
-    if(this.activeCompService.activeGroup != null) {
-      if(group.title != this.activeCompService.activeGroup.title) {
+    if(this.activeCompService.activeGroup() != null) {
+      if(group.title != this.activeCompService.activeGroup()?.title) {
         this.errorService.showErrorMessage("Cannot start group while other group is running");
       } else {
         this.router.navigateByUrl('/execute-group-admin');
@@ -101,11 +105,13 @@ export class ExecuteCompetitionComponent implements OnInit {
       this.activeCompService.saveActiveGroup(group).pipe(
         catchError((err) => {
           throw(err);
-          
         })
       ).subscribe((res) => {
-        this.activeCompService.activeGroup = group;
-        this.activeCompService.activeParticipantID = 0;
+        const comp = this.activeCompService.activeComp();
+        if(comp != null) {
+          this.activeCompService.activeGroupID.set(comp.groups.findIndex((gr) => gr == group));
+        }
+        this.activeCompService.activeParticipantID.set(0);
         this.router.navigateByUrl('/execute-group-admin');
       })
     }
