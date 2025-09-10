@@ -1,13 +1,14 @@
-import { Component, computed, inject, OnInit } from '@angular/core';
+import { Component, computed, inject, OnInit, signal } from '@angular/core';
 import { ActiveCompService } from '../../services/active-comp.service';
 import { Participant } from '../../model/participant.type';
 import { catchError } from 'rxjs';
 import { ErrorService } from '../../services/error.service';
 import { Router } from '@angular/router';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-admin-active-group',
-  imports: [],
+  imports: [FormsModule],
   templateUrl: './admin-active-group.component.html',
   styleUrl: './admin-active-group.component.scss'
 })
@@ -19,7 +20,10 @@ export class AdminActiveGroupComponent {
   group = this.activeCompService.activeGroup();
   activePart = this.activeCompService.activeGroup()?.participants[this.activeCompService.activeParticipantID()];
 
+  penalty = signal<number>(0);
+
   nextParticipant() {
+    console.log(this.penalty())
     this.activeCompService.nextParticipant().pipe(
       catchError((err) => {
         this.errorService.showErrorMessage("Error setting next participant");
@@ -40,6 +44,7 @@ export class AdminActiveGroupComponent {
       })
     ).subscribe((data) => {
       this.router.navigateByUrl('/execute-competition');
+      this.activeCompService.activeGroupID.set(-1);
       this.activeCompService.activeParticipantID.set(-1);
     })
   }

@@ -6,7 +6,7 @@
         <h1>{{group.title}}</h1>
         <h2>{{activePart[0].firstName}} {{activePart[0].lastName}}</h2>
 
-        <input type="number" placeholder="Strafwert">
+        <input type="number" placeholder="Strafwert" [(ngModel)]="penalty">
         @if(activeCompService.activeParticipantID() < group.participants.length - 1) {
             <button (click)="nextParticipant()">nächster Athlet</button>
         } @else {

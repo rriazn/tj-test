@@ -88,8 +88,6 @@ export class ExecuteCompetitionComponent implements OnInit{
   }
 
   startGroup(group: Group) {
-
-    console.log(this.activeCompService.activeGroupID())
     if(group.participants.length == 0) {
       this.errorService.showErrorMessage("Cannot start group with no participants");
       return;
@@ -102,15 +100,16 @@ export class ExecuteCompetitionComponent implements OnInit{
         this.router.navigateByUrl('/execute-group-admin');
       }
     } else {
+      const comp = this.activeCompService.activeComp();
+      if(comp != null) {
+        this.activeCompService.activeGroupID.set(comp.groups.findIndex((gr) => gr == group));
+      }
       this.activeCompService.saveActiveGroup(group).pipe(
         catchError((err) => {
           throw(err);
         })
       ).subscribe((res) => {
-        const comp = this.activeCompService.activeComp();
-        if(comp != null) {
-          this.activeCompService.activeGroupID.set(comp.groups.findIndex((gr) => gr == group));
-        }
+        
         this.activeCompService.activeParticipantID.set(0);
         this.router.navigateByUrl('/execute-group-admin');
       })
