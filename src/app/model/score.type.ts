@@ -29,3 +29,7 @@ export function createEmptyScore(): Score {
     penalty: 0
   };
 }
+
+export function createEmptyScoreArray(): Score[] {
+  return [createEmptyScore(), createEmptyScore(), createEmptyScore()];
+}

@@ -65,10 +65,10 @@
                         <li cdkDrag>
                             <div class="part">
                                 
-                                {{part[0].lastName}}, {{part[0].firstName}} {{getBirthYear(part[0])}} {{part[0].setRoutine}}
+                                {{part.lastName}}, {{part.firstName}} {{getBirthYear(part)}} {{part.setRoutine}}
                             </div>
                             <div class="images">
-                                <img src="./assets/trash.png" (click)="deleteParticipant(part[0])" />
+                                <img src="./assets/trash.png" (click)="deleteParticipant(part)" />
                             </div>
                         </li>
                     }
@@ -90,10 +90,10 @@
                                 @for (part of group.participants; track $index) {
                                     <li cdkDrag>
                                         <div class="part">
-                                            {{part[0].lastName}}, {{part[0].firstName}} {{getBirthYear(part[0])}} {{part[0].setRoutine}}
+                                            {{part.lastName}}, {{part.firstName}} {{getBirthYear(part)}} {{part.setRoutine}}
                                         </div>
                                         <div class="images">
-                                            <img src="./assets/trash.png" (click)="deleteParticipantFromGroup(part[0], group)" />
+                                            <img src="./assets/trash.png" (click)="deleteParticipantFromGroup(part, group)" />
                                         </div>
                                     </li>
                                 }

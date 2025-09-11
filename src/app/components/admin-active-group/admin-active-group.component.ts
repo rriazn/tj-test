@@ -1,6 +1,5 @@
 import { Component, computed, inject, OnInit, signal } from '@angular/core';
 import { ActiveCompService } from '../../services/active-comp.service';
-import { Participant } from '../../model/participant.type';
 import { catchError } from 'rxjs';
 import { ErrorService } from '../../services/error.service';
 import { Router } from '@angular/router';
@@ -23,7 +22,6 @@ export class AdminActiveGroupComponent {
   penalty = signal<number>(0);
 
   nextParticipant() {
-    console.log(this.penalty())
     this.activeCompService.nextParticipant().pipe(
       catchError((err) => {
         this.errorService.showErrorMessage("Error setting next participant");

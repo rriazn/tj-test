@@ -50,7 +50,7 @@ export class ExecuteCompetitionComponent implements OnInit{
   removePart(part: Participant) {
     const confirm = window.confirm(`Do you really want to remove ${part.lastName}, ${part.firstName}?`);
     if(this.editedGroup != null && confirm) {
-      this.editedGroup.participants = this.editedGroup?.participants.filter((p) => p[0] != part);
+      this.editedGroup.participants = this.editedGroup?.participants.filter((p) => p != part);
     }
   }
 

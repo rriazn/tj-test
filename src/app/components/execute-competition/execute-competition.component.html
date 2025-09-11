@@ -20,8 +20,8 @@
                         <ul class="edit-group">
                             @for (part of editedGroup?.participants; track $index) {
                                 <li>
-                                    {{part[0].lastName}}, {{part[0].firstName}} {{getBirthYear(part[0])}}
-                                    <img src="./assets/trash.png" (click)="removePart(part[0])"/>
+                                    {{part.lastName}}, {{part.firstName}} {{getBirthYear(part)}}
+                                    <img src="./assets/trash.png" (click)="removePart(part)"/>
                                 </li>
                             }
                             <button (click)="saveGroup(group)">Save</button>

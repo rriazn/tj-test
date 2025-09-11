@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import * as XLSX from 'xlsx';
 import { DateTime } from 'luxon';
 import { Participant } from '../model/participant.type';
+import { createEmptyScoreArray } from '../model/score.type';
 
 @Injectable({
   providedIn: 'root'
@@ -36,7 +37,8 @@ export class ConvertExcelService {
                   lastName: row['Nachname'],
                   affiliation: row['Verein'],
                   setRoutine: row['Übung'],
-                  birthDate: date
+                  birthDate: date,
+                  scores: createEmptyScoreArray()
                 }
               } else {
                 return {
@@ -44,7 +46,8 @@ export class ConvertExcelService {
                   lastName: row['Nachname'],
                   affiliation: row['Verein'],
                   setRoutine: row['Übung'],
-                  birthDate: "1900-1-1"
+                  birthDate: "1900-1-1",
+                  scores: createEmptyScoreArray()
                 }
               }
               

@@ -52,7 +52,7 @@ export class CreateCompetitionComponent implements OnInit{
   newCompName: string = "";
   newDate: string | null = DateTime.local().toISODate();
   newGroups: Array<Group> = [];
-  newUnassignedParticipants: Array<[Participant, Score]> = [];
+  newUnassignedParticipants: Array<Participant> = [];
   newJudgeConstellation = JudgeConstellation.Standart4ExecutionNoTOFNoHD;
   currId: number = 0;
 
@@ -175,7 +175,7 @@ export class CreateCompetitionComponent implements OnInit{
   }
 
   getParticipants(parts: Participant[]) {
-    this.newUnassignedParticipants = this.newUnassignedParticipants.concat(parts.map((p) => [p, createEmptyScore()]));
+    this.newUnassignedParticipants = this.newUnassignedParticipants.concat(parts);
   }
 
   onEnter(event: KeyboardEvent) {
@@ -203,13 +203,13 @@ export class CreateCompetitionComponent implements OnInit{
   }
 
   deleteParticipant(part: Participant) {
-    this.newUnassignedParticipants = this.newUnassignedParticipants.filter((e) => e[0] != part);
+    this.newUnassignedParticipants = this.newUnassignedParticipants.filter((e) => e != part);
   }
 
   deleteParticipantFromGroup(part: Participant, group: Group) {
     this.newGroups.map((g) => {
       if(g == group) {
-        g.participants = g.participants.filter((p) => p[0] != part);
+        g.participants = g.participants.filter((p) => p != part);
       }
     })
   }
@@ -219,7 +219,7 @@ export class CreateCompetitionComponent implements OnInit{
   }
 
 
-  drop(event: CdkDragDrop<[Participant, Score][]>) {
+  drop(event: CdkDragDrop<Participant[]>) {
     if (event.previousContainer === event.container) {
       moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
     } else {
