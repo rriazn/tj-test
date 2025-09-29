@@ -12,7 +12,7 @@ export class JudgeService {
   constructor() { }
 
   saveJudge(judge: Judge, pwHash: string) {
-    return this.http.post('http://localhost:3000/users/add-user', {
+    return this.http.post('http://localhost:3000/users', {
             user: {
               username: judge.name,
               pwHash: pwHash,
@@ -22,12 +22,10 @@ export class JudgeService {
   }
 
   deleteJudge(judge: Judge) {
-    return this.http.post('http://localhost:3000/users/add-user', {
-        username: judge.name
-      }, {responseType: 'text'});
+    return this.http.delete('http://localhost:3000/users/' + judge.name);
   }
 
   getJudges(): Observable<Judge[]> {
-    return this.http.get<Judge[]>('http://localhost:3000/users/get-users');
+    return this.http.get<Judge[]>('http://localhost:3000/users');
   }
 }

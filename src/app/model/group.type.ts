@@ -4,5 +4,5 @@ import { Score } from "./score.type";
 
 export type Group = {
     title: string,
-    participants: [Participant, Score][]
+    participants: Participant[]
 }

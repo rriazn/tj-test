@@ -19,6 +19,7 @@ export class ManageJudgesComponent implements OnInit{
   ngOnInit(): void {
     this.judgeService.getJudges().subscribe({
       next: (data) => {
+        console.log(data);
         this.judges.set(data);
       },
       error: (error) => {

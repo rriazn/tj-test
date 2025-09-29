@@ -35,7 +35,7 @@ export class LoginComponent {
     this.formHash.controls.passwordHash.setValue(await this.hash.hashStringSHA256(this.form.getRawValue().password));
     this.formHash.controls.username.setValue(this.form.getRawValue().username);
     
-    this.http.post<{user: UserInterface}>("http://localhost:3000/users/login", {user: this.formHash.getRawValue()}).pipe(
+    this.http.post<{user: UserInterface}>("http://localhost:3000/auth/login", {user: this.formHash.getRawValue()}).pipe(
       catchError((error) => {
         if (error.status === 401) {
           this.gaveWrongPassword.set(true);

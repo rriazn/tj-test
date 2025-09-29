@@ -10,7 +10,8 @@ export type Score = {
     tof: number,
     sync1: number,
     sync2: number,
-    penalty: number
+    penalty: number,
+    skills: number
 }
 
 export function createEmptyScore(): Score {
@@ -26,7 +27,8 @@ export function createEmptyScore(): Score {
     tof: 0,
     sync1: 0,
     sync2: 0,
-    penalty: 0
+    penalty: 0,
+    skills: 0
   };
 }
 
