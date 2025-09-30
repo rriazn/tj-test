@@ -19,7 +19,6 @@ export class ManageJudgesComponent implements OnInit{
   ngOnInit(): void {
     this.judgeService.getJudges().subscribe({
       next: (data) => {
-        console.log(data);
         this.judges.set(data);
       },
       error: (error) => {
@@ -83,7 +82,7 @@ export class ManageJudgesComponent implements OnInit{
         }
         replace = true;
       }
-      this.judgeService.saveJudge(this.newJudge(), this.newPw()).pipe(
+      this.judgeService.saveJudge(this.newJudge(), this.newPw(), replace).pipe(
         catchError((err) => {
           this.errorService.showErrorMessage('error saving user ' + err);
           throw(err);
@@ -95,6 +94,18 @@ export class ManageJudgesComponent implements OnInit{
         this.judges().push(this.newJudge()); 
         this.editMode.set(false);
       })
+    }
+  }
+
+  deleteJudge(judge: Judge) {
+    const confirm = window.confirm("Are you sure you want to delete user " + judge.name + "? This action cannot be reversed.")
+    if(confirm) {
+      this.judgeService.deleteJudge(judge).pipe(catchError((err) => {
+      this.errorService.showErrorMessage('error deleting user ' + err);
+      throw(err);
+    })).subscribe((data) => {
+      this.judges.set(this.judges().filter((j) => j.name != judge.name));
+    });
     }
   }
 

@@ -1,10 +1,21 @@
 <div class="manage-judges-outer">
     <h1>Active Judges</h1>
-    <ul class="judge-list">
-        @for(judge of judges(); track $index) {
-            <li>{{judge.function}}: {{judge.name}}</li>
-        }
-    </ul>
+    <div class="manage-judges-inner">
+        <ul class="judge-list">
+            @for(judge of judges(); track $index) {
+                <li>
+                    <div class="list-text">
+                        {{judge.function}}: {{judge.name}}
+                    </div>
+                    
+                    <div class="images">
+                        <img src="./assets/edit.png">
+                        <img src="./assets/trash.png" (click)="deleteJudge(judge)">
+                    </div>
+                </li>
+            }
+        </ul>
+    </div>
     <button (click)="addJudge()">New Judge</button>
 
     @if(editMode()) {
