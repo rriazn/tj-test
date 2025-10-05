@@ -9,7 +9,7 @@
                     </div>
                     
                     <div class="images">
-                        <img src="./assets/edit.png">
+                        <img src="./assets/edit.png" (click)="editJudge(judge)">
                         <img src="./assets/trash.png" (click)="deleteJudge(judge)">
                     </div>
                 </li>
@@ -20,7 +20,8 @@
 
     @if(editMode()) {
         <div class="edit-part">
-            <input type="text" placeholder="name" [(ngModel)]="newJudge().name">
+            <input type="text" placeholder="username" [(ngModel)]="newJudge().name">
+            <input type="text" placeholder="display name" [(ngModel)]="newJudge().displayName">
             <input type="password" placeholder="password" [ngModel]="''"  (ngModelChange)="hashPw($event)">
             <ul>
                 @for(member of JudgeFuncVals; track $index) {

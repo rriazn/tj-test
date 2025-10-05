@@ -2,5 +2,6 @@ import { JudgeFunction } from "../enums/judge-functions"
 
 export type Judge = {
     name: string,
-    function: JudgeFunction
+    function: JudgeFunction,
+    displayName: string
 }

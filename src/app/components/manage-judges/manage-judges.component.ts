@@ -45,6 +45,7 @@ export class ManageJudgesComponent implements OnInit{
   getStandartJudge(): Judge {
     return {
       name: '',
+      displayName: '',
       function: JudgeFunction.DIFFICULTY
     }
   }
