@@ -4,10 +4,19 @@
 
     @if(group != null && activePart != undefined) {
         <h1>{{group.title}}</h1>
+        <h3>
+            @if(group.stage == groupStage.preliminary1) {
+                Preliminary 1
+            } @else if (group.stage == groupStage.preliminary2) {
+                Preliminary 2
+            } @else {
+                Finale
+            }
+        </h3>
         <h2>{{activePart.firstName}} {{activePart.lastName}}</h2>
 
         <input type="number" placeholder="Strafwert" [(ngModel)]="penalty">
-        @if(activeCompService.activeParticipantID() < group.participants.length - 1) {
+        @if(activeCompService.activeParticipantID() < group.participants.length - 1 || group.stage != groupStage.final) {
             <button (click)="nextParticipant()">nächster Athlet</button>
         } @else {
             <button (click)="endGroup()">Gruppe beenden</button>

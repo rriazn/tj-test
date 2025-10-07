@@ -4,6 +4,7 @@ import { catchError } from 'rxjs';
 import { ErrorService } from '../../services/error.service';
 import { Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
+import { GroupStage } from '../../enums/group-stage';
 
 @Component({
   selector: 'app-admin-active-group',
@@ -12,6 +13,7 @@ import { FormsModule } from '@angular/forms';
   styleUrl: './admin-active-group.component.scss'
 })
 export class AdminActiveGroupComponent {
+  groupStage = GroupStage;
   activeCompService = inject(ActiveCompService);
   errorService = inject(ErrorService);
   router = inject(Router);
@@ -29,8 +31,10 @@ export class AdminActiveGroupComponent {
         throw(err);
       })
     ).subscribe((data) => {
-      this.activeCompService.activeParticipantID.set(this.activeCompService.activeParticipantID() + 1);
-      this.activePart = this.activeCompService.activeGroup()?.participants[this.activeCompService.activeParticipantID()];
+      if(this.group != undefined) {
+        this.activeCompService.activeParticipantID.set((this.activeCompService.activeParticipantID() + 1) % this.group?.participants.length);
+        this.activePart = this.activeCompService.activeGroup()?.participants[this.activeCompService.activeParticipantID()];
+      }
     })
   }
 

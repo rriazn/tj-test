@@ -11,6 +11,7 @@ import { E, G } from '@angular/cdk/keycodes';
 import { MatDialog } from '@angular/material/dialog';
 import { ErrorDialogComponent } from '../error-dialog/error-dialog.component';
 import { ErrorService } from '../../services/error.service';
+import { GroupStage } from '../../enums/group-stage';
 
 @Component({
   selector: 'app-execute-competition',
@@ -34,7 +35,7 @@ export class ExecuteCompetitionComponent implements OnInit{
   
   editedGroup: Group | null = null;
 
-
+  groupStage = GroupStage;
   
   editGroup(group: Group) {
     if(null == this.editedGroup) {

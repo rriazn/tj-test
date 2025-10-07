@@ -14,6 +14,7 @@ import { Router } from '@angular/router';
 import { ActiveCompService } from '../../services/active-comp.service';
 import { ErrorService } from '../../services/error.service';
 import { Score, createEmptyScore } from '../../model/score.type';
+import { GroupStage } from '../../enums/group-stage';
 
 @Component({
   selector: 'app-create-competition',
@@ -188,7 +189,8 @@ export class CreateCompetitionComponent implements OnInit{
     if(this.groupName != "") {
       this.newGroups = [...this.newGroups, {
         title: this.groupName,
-        participants: []
+        participants: [],
+        stage: GroupStage.preliminary1
       }];
       this.groupName = "";
     } 
