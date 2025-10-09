@@ -33,6 +33,12 @@ export class AdminActiveGroupComponent {
     ).subscribe((data) => {
       if(this.group != undefined) {
         this.activeCompService.activeParticipantID.set((this.activeCompService.activeParticipantID() + 1) % this.group?.participants.length);
+        if(this.activeCompService.activeParticipantID() == 0) {
+          const group = this.activeCompService.activeGroup();
+          if (group != null) {
+            group.stage += 1;
+          }
+        }
         this.activePart = this.activeCompService.activeGroup()?.participants[this.activeCompService.activeParticipantID()];
       }
     })
